@@ -58,6 +58,7 @@ int dostuff2()
 	cout << "cin is good: " << cin.good() << endl;
 	cin >> firstClass;
 	cout << "cin is good: " << cin.good() << endl;
+	cin.clear();
 
 	if (userString == "y") {
 	   firstClass = true;
