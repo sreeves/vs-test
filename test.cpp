@@ -28,7 +28,7 @@ void calculate_foo(const char *cow_name, int start_weight, int end_weight, int n
 
 int dostuff2()
 {
-   double luggageLength = 0.0;
+	double luggageLength = 0.0;
 	double luggageWidth = 0.0;
 	double luggageHeight = 0.0;
 	double linearInches = 0.0;
@@ -61,7 +61,7 @@ int dostuff2()
 	cin.clear();
 
 	if (userString == "y") {
-	   firstClass = true;
+		firstClass = true;
 	}
 	else {
 		firstClass = false;
@@ -71,7 +71,7 @@ int dostuff2()
 	if (firstClass == true) {
 		//luggageClass = "First Class";
 		if (linearInches <= firstCarryOnInches) {
-		   luggageClass = "Carry on";
+			luggageClass = "Carry on";
 			luggageCost = "0.00";
 			cout << "Your luggage class is: " << luggageClass << endl;
 			cout << "Your cost is: " << luggageCost << endl << endl;
@@ -93,23 +93,23 @@ int dostuff2()
 	else {
 	//luggageClass = "Coach";
 	if (linearInches <= coachCarryOnInches) {
-	   luggageClass = "Carry on";
-	   luggageCost = "$15.00";
-	   cout << "Your luggage class is: " << luggageClass << endl;
-	   cout << "Your cost is: " << luggageCost << endl << endl;
-	   cout << "Goodbye.";
+		luggageClass = "Carry on";
+		luggageCost = "$15.00";
+		cout << "Your luggage class is: " << luggageClass << endl;
+		cout << "Your cost is: " << luggageCost << endl << endl;
+		cout << "Goodbye.";
 	}
 	else if (linearInches <= coachCheckedInches) {
-	   luggageClass = "Checked";
-	   luggageCost = "$25.00";
-	   cout << "Your luggage class is: " << luggageClass << endl;
-	   cout << "Your cost is: " << luggageCost << endl << endl;
-	   cout << "Goodbye.";
+		luggageClass = "Checked";
+		luggageCost = "$25.00";
+		cout << "Your luggage class is: " << luggageClass << endl;
+		cout << "Your cost is: " << luggageCost << endl << endl;
+		cout << "Goodbye.";
 	}
 	else {
-	   luggageClass = "Not allowed";
-	   cout << "Your luggage class is: " << luggageClass << endl << endl;
-	   cout << "Goodbye.";
+		luggageClass = "Not allowed";
+		cout << "Your luggage class is: " << luggageClass << endl << endl;
+		cout << "Goodbye.";
 	}
 	}
 
