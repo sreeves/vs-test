@@ -8,6 +8,7 @@
 #include <string>
 #include <cstdlib>
 #include <ios>
+#include <cassert>
 
 using namespace std;
 
@@ -119,8 +120,45 @@ int dostuff2()
 	return 0;
 }
 
+int dostuff4() {
+	return 0;
+}
+
+int dostuff3() {
+	dostuff4();
+}
+
+int StepsToFeet(int baseSteps) {
+   const int FEET_PER_STEP = 3;  // Unit conversion
+	int feetTot = 0;              // Corresponding feet to steps
+	int val1 = 38;
+	int val2;
+
+	val2 = baseSteps + 90;
+   
+	feetTot = baseSteps * FEET_PER_STEP;
+	val2 = val1 + baseSteps;
+	val1 -= val2;
+}
+
 int dostuff1()
 {
+	char testchar = '\xFFFFF';
+	cout << "testchar:" << testchar << endl;
+	const char *str = "long"
+	"string";
+	int octVar = 011;
+	cout << octVar << endl;
+	cout << str;
+
+	str = "longer"
+	"string";
+
+	// int feet = StepsToFeet(8);
+	// assert(feet);
+	// assert(dostuff3() /*foo*/ * 3*4);
+
+	/*
 	int x = 3;
 	string s = "foo";
 
@@ -137,6 +175,7 @@ int dostuff1()
 	file2.close();
 	cout << x << " " << s << endl;
 	tolower('w');
+
 	/*
 	char name1[] = "foo";
 	char name2[] = "bar";
@@ -221,6 +260,7 @@ int dostuff1()
 	//my_string.erase(7, 2);
 	my_string.replace(7,2,"");
 	cout << my_string << endl;
+	*/
 	cout << "char " << sizeof(char) << ". short " << sizeof(short) << "." << endl;
 	cout << "long " << sizeof(long) << ". long long " << sizeof(long long) << "." << endl;
 	cout << "int " << sizeof(int) << "." << endl;
@@ -283,8 +323,12 @@ int dostuff1()
 
 int main(int argv, char **argc)
 {
-	//dostuff1();
-	dostuff2();
+	string foo = "cool stuff";
+	foo.at();
+
+	)
+	dostuff1();
+	//dostuff2();
 	pause();
 	cout << "done" << endl;
 }
