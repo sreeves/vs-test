@@ -324,9 +324,7 @@ int dostuff1()
 int main(int argv, char **argc)
 {
 	string foo = "cool stuff";
-	foo.at();
-
-	)
+	foo.at(0);
 	dostuff1();
 	//dostuff2();
 	pause();
