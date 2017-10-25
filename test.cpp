@@ -321,11 +321,29 @@ int dostuff1()
 	*/
 }
 
-int main(int argv, char **argc)
+void fooFunc2(const string str) {
+	// str.erase(2);
+	char c = str.at(2);
+	c = 'x';
+	cout << "fooFunc2 str is " << str << endl;
+}
+
+void fooFunc(vector<int> a) {
+	a = 6;
+	return;
+}
+
+int main(int argv, char **argc) 
 {
-	string foo = "cool stuff";
-	foo.at(0);
-	dostuff1();
+	int val1 = 10;
+	int& ref1 = val1;
+	fooFunc(ref1);
+	cout << "val1:" << val1 << endl;
+
+	string str = "what the karumba";
+	fooFunc2(str);
+	cout << "str is " << str << endl;
+	// dostuff1();
 	//dostuff2();
 	pause();
 	cout << "done" << endl;
