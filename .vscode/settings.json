@@ -2,6 +2,7 @@
     "editor.tabSize": 3,
     "files.associations": {
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "array": "cpp"
     }
 }

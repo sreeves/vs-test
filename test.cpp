@@ -367,7 +367,19 @@ int dostuff1()
 	*/
 }
 
-int main(int argv, char **argc)
+void fooFunc2(const string str) {
+	// str.erase(2);
+	char c = str.at(2);
+	c = 'x';
+	cout << "fooFunc2 str is " << str << endl;
+}
+
+void fooFunc(vector<int> a) {
+	a = 6;
+	return;
+}
+
+int main(int argv, char **argc) 
 {
 	// dostuff1();
 	//dostuff2();
