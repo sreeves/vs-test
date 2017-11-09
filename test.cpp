@@ -14,7 +14,57 @@ using namespace std;
 
 enum WinPosEnum { NORMAL, MAX, MIN, LEFT, RIGHT };
 enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
-enum class WinPosEnum_class { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
+//enum class WinPosEnum_class { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
+
+class ClassB {
+public:
+	ClassB();
+	ClassB(int parm1);
+
+private:
+	int var1;
+};
+
+ClassB::ClassB() {
+	cout << "ClassB::ClassB()" << endl;
+	var1 = 2;
+}
+
+ClassB::ClassB(int p1) {
+	cout << "ClassB::ClassB(int)" << endl;
+	var1 = p1;
+};
+
+class ClassA {
+public:
+	ClassA();
+	ClassA(int parm1, vector<double> parm2, ClassB b);
+
+private:
+	int var1;
+	vector<double> vec;
+	ClassB myB;
+};
+
+ClassA::ClassA() {
+	cout << "ClassA::ClassA()" << endl;
+	var1 = 3;
+	vec = vector<double> (2, 5.6);
+	myB = ClassB(7);
+}
+
+ClassA::ClassA(int p1, vector<double> parm2, ClassB b) : myB(b) {
+	cout << "ClassA::ClassA(int, vector<double, ClassB)" << endl;
+	vec = vector<double> (2, 7.8);
+	myB = ClassB(9);
+}
+
+int dostuff3() {
+	ClassA * myContainer = new ClassA[10];
+	cout << endl;
+	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB());
+	cout << "yeha" << endl;
+}
 
 void calculate_foo(const char *cow_name, int start_weight, int end_weight, int num_days)
 {
@@ -120,22 +170,14 @@ int dostuff2()
 	return 0;
 }
 
-int dostuff4() {
-	return 0;
-}
-
-int dostuff3() {
-	dostuff4();
-}
-
 int StepsToFeet(int baseSteps) {
-   const int FEET_PER_STEP = 3;  // Unit conversion
+	const int FEET_PER_STEP = 3;  // Unit conversion
 	int feetTot = 0;              // Corresponding feet to steps
 	int val1 = 38;
 	int val2;
 
 	val2 = baseSteps + 90;
-   
+	
 	feetTot = baseSteps * FEET_PER_STEP;
 	val2 = val1 + baseSteps;
 	val1 -= val2;
@@ -143,17 +185,21 @@ int StepsToFeet(int baseSteps) {
 
 int dostuff1()
 {
-	char testchar = '\xFFFFF';
+	char testchar = '\0';
 	cout << "testchar:" << testchar << endl;
 	const char *str = "long"
 	"string";
 	int octVar = 011;
 	cout << octVar << endl;
+	cout.operator<<(octVar);
 	cout << str;
 
 	str = "longer"
 	"string";
 
+	string testStr = "foo";
+	cin >> testStr;
+	cout << testStr;
 	// int feet = StepsToFeet(8);
 	// assert(feet);
 	// assert(dostuff3() /*foo*/ * 3*4);
@@ -183,9 +229,9 @@ int dostuff1()
 	cout << "sizeof foo " << sizeof(name1) << endl;
 	cout << "sizeof bar " << sizeof(name2) << endl;
 
+	*/
 	int i1 = 5;
 	vector<int> vect(3, 10);
-
 	cout << vect.at(2) << endl;
 	i1 = vect.at(2);
 	i1 = 6;
@@ -323,10 +369,9 @@ int dostuff1()
 
 int main(int argv, char **argc)
 {
-	string foo = "cool stuff";
-	foo.at(0);
-	dostuff1();
+	// dostuff1();
 	//dostuff2();
+	dostuff3();
 	pause();
 	cout << "done" << endl;
 }
