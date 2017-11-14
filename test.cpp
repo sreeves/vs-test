@@ -64,6 +64,8 @@ int dostuff3() {
 	cout << endl;
 	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB());
 	cout << "yeha" << endl;
+
+	char * myP = "wow";
 }
 
 void calculate_foo(const char *cow_name, int start_weight, int end_weight, int num_days)
@@ -372,11 +374,6 @@ void fooFunc2(const string str) {
 	char c = str.at(2);
 	c = 'x';
 	cout << "fooFunc2 str is " << str << endl;
-}
-
-void fooFunc(vector<int> a) {
-	a = 6;
-	return;
 }
 
 int main(int argv, char **argc) 
