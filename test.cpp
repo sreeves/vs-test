@@ -20,7 +20,9 @@ class ClassB {
 public:
 	ClassB();
 	ClassB(int parm1);
-
+	int getVar1() {
+		return var1;
+	}
 private:
 	int var1;
 };
@@ -39,7 +41,9 @@ class ClassA {
 public:
 	ClassA();
 	ClassA(int parm1, vector<double> parm2, ClassB b);
-
+	ClassA operator+(ClassA rhand_side);
+	string print();
+	
 private:
 	int var1;
 	vector<double> vec;
@@ -48,141 +52,35 @@ private:
 
 ClassA::ClassA() {
 	cout << "ClassA::ClassA()" << endl;
-	var1 = 3;
-	vec = vector<double> (2, 5.6);
-	myB = ClassB(7);
+	var1 = 2;
+	vec = vector<double> (2, 2.0);
+	myB = ClassB(2);
 }
 
-ClassA::ClassA(int p1, vector<double> parm2, ClassB b) : myB(b) {
+ClassA::ClassA(int parm1, vector<double> parm2, ClassB b) : myB(b) {
 	cout << "ClassA::ClassA(int, vector<double, ClassB)" << endl;
-	vec = vector<double> (2, 7.8);
-	myB = ClassB(9);
+	var1 = parm1;
+	vec = parm2;
+}
+
+ClassA ClassA::operator+(ClassA rhs) {
+	return ClassA(this->var1 + rhs.var1, vector<double>() ,
+		ClassB(myB.getVar1() + rhs.myB.getVar1()));
+}
+
+string ClassA::print() {
+	cout << "ClassA: var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.getVar1() << endl;
 }
 
 int dostuff3() {
 	ClassA * myContainer = new ClassA[10];
 	cout << endl;
-	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB());
-	cout << "yeha" << endl;
+	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3));
+	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6));
+	myContainer[2] = myContainer[0] + myContainer[1];
+	cout << myContainer[2].print() << endl;
 
-	char * myP = "wow";
-}
-
-void calculate_foo(const char *cow_name, int start_weight, int end_weight, int num_days)
-{
-	int weight_gain_per_day = (end_weight - start_weight) / num_days;
-
-	if (start_weight < 0) printf("invalide start weight");
-	if (end_weight < 0) printf("invalide end weight");
-	if (end_weight < start_weight) printf("cow lost weight");
-
-	printf("%s weighed %d and gained %d per day\n", cow_name, start_weight, weight_gain_per_day);
-}
-
-int dostuff2()
-{
-	double luggageLength = 0.0;
-	double luggageWidth = 0.0;
-	double luggageHeight = 0.0;
-	double linearInches = 0.0;
-	double volume = 0.0;
-	string userString = "";
-	bool firstClass = false;
-	string luggageClass = "";
-	string luggageCost = "";
-	int coachCarryOnInches = 45;
-	int coachCheckedInches = 62;
-	int firstCarryOnInches = 45;
-	int firstCheckedInches = 62;
-
-	cout << "\t\t" << "** Welcome to BYU Air Luggage Sizing **" << endl << endl;
-	cout << "Please enter the length, width, and height of your luggage in inches: " << endl << endl;
-	cin >> luggageLength;
-	cin >> luggageWidth;
-	cin >> luggageHeight;
-
-	linearInches = luggageHeight + luggageLength + luggageWidth;
-	cout << "Your luggage is " << fixed << setprecision(1) << linearInches << " linear inches." << endl;
-
-	volume = luggageHeight * luggageLength * luggageWidth;
-	cout << "Your luggage has a volume of " << fixed << setprecision(1) << volume << " cubic inches." << endl << endl;
-
-	cout << "Are you flying first class (y or n): " << endl << endl;
-	cout << "cin is good: " << cin.good() << endl;
-	cin >> firstClass;
-	cout << "cin is good: " << cin.good() << endl;
-	cin.clear();
-
-	if (userString == "y") {
-		firstClass = true;
-	}
-	else {
-		firstClass = false;
-	}
-
-
-	if (firstClass == true) {
-		//luggageClass = "First Class";
-		if (linearInches <= firstCarryOnInches) {
-			luggageClass = "Carry on";
-			luggageCost = "0.00";
-			cout << "Your luggage class is: " << luggageClass << endl;
-			cout << "Your cost is: " << luggageCost << endl << endl;
-			cout << "Goodbye.";
-		}
-		else if (linearInches <= firstCheckedInches) {
-			luggageClass = "Checked";
-			luggageCost = "0.00";
-			cout << "Your luggage class is: " << luggageClass << endl;
-			cout << "Your cost is: " << luggageCost << endl << endl;
-			cout << "Goodbye.";
-		}
-		else {
-			luggageClass = "Not allowed";
-			cout << "Your luggage class is: " << luggageClass << endl << endl;
-			cout << "Goodbye.";
-		}
-	}
-	else {
-	//luggageClass = "Coach";
-	if (linearInches <= coachCarryOnInches) {
-		luggageClass = "Carry on";
-		luggageCost = "$15.00";
-		cout << "Your luggage class is: " << luggageClass << endl;
-		cout << "Your cost is: " << luggageCost << endl << endl;
-		cout << "Goodbye.";
-	}
-	else if (linearInches <= coachCheckedInches) {
-		luggageClass = "Checked";
-		luggageCost = "$25.00";
-		cout << "Your luggage class is: " << luggageClass << endl;
-		cout << "Your cost is: " << luggageCost << endl << endl;
-		cout << "Goodbye.";
-	}
-	else {
-		luggageClass = "Not allowed";
-		cout << "Your luggage class is: " << luggageClass << endl << endl;
-		cout << "Goodbye.";
-	}
-	}
-
-
-	//system("pause");
-
-	return 0;
-}
-
-int StepsToFeet(int baseSteps) {
-	const int FEET_PER_STEP = 3;  // Unit conversion
-	int feetTot = 0;              // Corresponding feet to steps
-	int val1 = 38;
-	int val2;
-
-	val2 = baseSteps + 90;
-	
-	feetTot = baseSteps * FEET_PER_STEP;
-	val2 = val1 + baseSteps;
-	val1 -= val2;
+	const char * myP = "wow";
 }
 
 int dostuff1()

@@ -37,7 +37,7 @@ Buf& Buf::operator=( const Buf &otherbuf )
     {  
         if (buffer)  
             delete [] buffer;  
-  
+
         sizeOfBuffer =  strlen( otherbuf.buffer ) + 1;   
         buffer = new char[sizeOfBuffer];  
         strncpy( buffer, otherbuf.buffer, sizeOfBuffer );  
@@ -47,18 +47,18 @@ Buf& Buf::operator=( const Buf &otherbuf )
   
 int main()  
 {  
-   vector<int> v(3, 4);
-   v.erase(4 + v.begin());
+    vector<int> v(3, 4);
+    v.erase(4 + v.begin());
 
     Buf myBuf( "my buffer", 10 );  
     Buf yourBuf( "your buffer", 12 );  
-  
+
     // Display 'my buffer'  
     myBuf.Display();  
-  
+
     // assignment opperator  
     myBuf = yourBuf;  
-  
+
     // Display 'your buffer'  
     myBuf.Display();  
 }  
