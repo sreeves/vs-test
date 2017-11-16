@@ -86,6 +86,10 @@ string ClassA::print() {
 // }
 
 void dostuff3() {
+	// int bits = 0xFFFF;
+	// bits = bits ^ 0xFF;
+	// cout << hex << bits << endl;
+
 	// int n=42;
 	// double a[n][5];
 	// auto p1 = new double[5][5];
@@ -108,13 +112,12 @@ void dostuff3() {
 	// }
 	// cout << endl;
 
+	// ClassA * myContainer2 = new ClassA[3] (2, vector<double> (1, 2.0), ClassB(3));
 	ClassA * myContainer = new ClassA[3];
 	int foo[] = {0, 1, 3, 5, 7};
-	for(auto it = std::begin(foo); it != std::end(foo); ++it) {
-		cout << *it << " ";
-	}
-	// ClassA * myContainer2 = new ClassA[3] (2, vector<double> (1, 2.0), ClassB(3));
-	cout << endl;
+	// for(auto it = std::begin(foo); it != std::end(foo); ++it) {
+	// 	cout << *it << " ";
+	// }
 	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3));
 	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6));
 	myContainer[2] = myContainer[0] + myContainer[1];
