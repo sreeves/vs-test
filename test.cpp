@@ -73,6 +73,11 @@ string ClassA::print() {
 }
 
 int dostuff3() {
+	int bits = 0xFFFF;
+
+	bits = bits ^ 0xFF;
+	cout << hex << bits << endl;
+	
 	ClassA * myContainer = new ClassA[10];
 	cout << endl;
 	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3));
