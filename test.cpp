@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <ios>
 #include <cassert>
+#include <sstream>
 
 using namespace std;
 
@@ -69,15 +70,39 @@ ClassA ClassA::operator+(ClassA rhs) {
 }
 
 string ClassA::print() {
-	cout << "ClassA: var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.getVar1() << endl;
+	ostringstream outStream;
+	outStream << "ClassA: var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.getVar1() << endl;
+	return outStream.str();
 }
 
-int dostuff3() {
+void dostuff3() {
 	int bits = 0xFFFF;
 
 	bits = bits ^ 0xFF;
 	cout << hex << bits << endl;
 	
+// ClassA operator+(ClassA lhs, ClassA rhs) {
+// 	ClassA result = ClassA();
+// 	return result;
+// }
+
+	int size = sizeof(ClassA(88, vector<double>(600, 33.3), ClassB(399)));
+	cout << "sizeof(ClassA) is: " << size;
+	size = sizeof(int);
+	cout << size;
+	size = sizeof(ClassB);
+	cout << size;
+	size = sizeof(vector<double>);
+	cout << size;
+
+	vector<ClassA> foo(6, ClassA());
+
+	for(vector<ClassA>::iterator it = foo.begin(); it != foo.end(); it++) {
+		(*it).print();
+	}
+	cout << endl;
+
+
 	ClassA * myContainer = new ClassA[10];
 	cout << endl;
 	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3));
@@ -270,6 +295,7 @@ int dostuff1()
 	int scopetest;
 	printf("scopetest is %d\n", scopetest);
 	*/
+	return 0;
 }
 
 void fooFunc2(const string str) {
