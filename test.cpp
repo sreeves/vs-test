@@ -29,12 +29,12 @@ private:
 };
 
 ClassB::ClassB() {
-	cout << "ClassB::ClassB()" << endl;
+	cout << "ClassB::ClassB() - this(" << this << ")" << endl;
 	var1 = 2;
 }
 
 ClassB::ClassB(int p1) {
-	cout << "ClassB::ClassB(int)" << endl;
+	cout << "ClassB::ClassB(int) - this(" << this << ")" << endl;
 	var1 = p1;
 };
 
@@ -43,6 +43,7 @@ public:
 	ClassA();
 	ClassA(int parm1, vector<double> parm2, ClassB b);
 	ClassA operator+(ClassA rhand_side);
+	~ClassA();
 	string print();
 	
 private:
@@ -52,16 +53,20 @@ private:
 };
 
 ClassA::ClassA() {
-	cout << "ClassA::ClassA()" << endl;
+	cout << "ClassA::ClassA() - this(" << this << ")" << endl;
 	var1 = 2;
 	vec = vector<double> (2, 2.0);
 	myB = ClassB(2);
 }
 
 ClassA::ClassA(int parm1, vector<double> parm2, ClassB b) : myB(b) {
-	cout << "ClassA::ClassA(int, vector<double, ClassB)" << endl;
+	cout << "ClassA::ClassA(int, vector<double, ClassB) - this(" << this << ")" << endl;
 	var1 = parm1;
 	vec = parm2;
+}
+
+ClassA::~ClassA() {
+	cout << "ClassA::~ClassA() - this(" << this << ")" << endl;
 }
 
 ClassA ClassA::operator+(ClassA rhs) {
@@ -71,7 +76,7 @@ ClassA ClassA::operator+(ClassA rhs) {
 
 string ClassA::print() {
 	ostringstream outStream;
-	outStream << "ClassA: var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.getVar1() << endl;
+	outStream << "ClassA this: " << this << " var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.getVar1() << endl;
 	return outStream.str();
 }
 
@@ -81,29 +86,40 @@ string ClassA::print() {
 // }
 
 void dostuff3() {
-	int size = sizeof(ClassA(88, vector<double>(600, 33.3), ClassB(399)));
-	cout << "sizeof(ClassA) is: " << size;
-	size = sizeof(int);
-	cout << size;
-	size = sizeof(ClassB);
-	cout << size;
-	size = sizeof(vector<double>);
-	cout << size;
+	// int n=42;
+	// double a[n][5];
+	// auto p1 = new double[5][5];
+	// double (*p1)[n] = new double[n][5];
+	// double (*p2)[n] = new double[n][n];
+	// cout << sizeof(a) << endl;
 
-	vector<ClassA> foo(6, ClassA());
+	// int size = sizeof(ClassA(88, vector<double>(600, 33.3), ClassB(399)));
+	// cout << "sizeof(ClassA) is: " << size << endl;
+	// size = sizeof(int);
+	// cout << size << endl;
+	// size = sizeof(ClassB);
+	// cout << size << endl;
+	// size = sizeof(vector<double>);
+	// cout << size << endl;
 
-	for(vector<ClassA>::iterator it = foo.begin(); it != foo.end(); it++) {
-		(*it).print();
+	// vector<ClassA> foo(6, ClassA());
+	// for(vector<ClassA>::iterator it = foo.begin(); it != foo.end(); it++) {
+	// 	(*it).print();
+	// }
+	// cout << endl;
+
+	ClassA * myContainer = new ClassA[3];
+	int foo[] = {0, 1, 3, 5, 7};
+	for(auto it = std::begin(foo); it != std::end(foo); ++it) {
+		cout << *it << " ";
 	}
-	cout << endl;
-
-
-	ClassA * myContainer = new ClassA[10];
+	// ClassA * myContainer2 = new ClassA[3] (2, vector<double> (1, 2.0), ClassB(3));
 	cout << endl;
 	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3));
 	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6));
 	myContainer[2] = myContainer[0] + myContainer[1];
 	cout << myContainer[2].print() << endl;
+	delete[] myContainer;
 
 	const char * myP = "wow";
 }
