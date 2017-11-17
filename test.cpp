@@ -21,6 +21,8 @@ class ClassB {
 public:
 	ClassB();
 	ClassB(int parm1);
+	ClassB(const ClassB& orig);
+	~ClassB();
 	int getVar1() {
 		return var1;
 	}
@@ -33,15 +35,24 @@ ClassB::ClassB() {
 	var1 = 2;
 }
 
+ClassB::ClassB(const ClassB& orig) {
+	cout << "ClassB::ClassB(ClassB &) - this(" << this << ")" << endl;
+}
+
 ClassB::ClassB(int p1) {
 	cout << "ClassB::ClassB(int) - this(" << this << ")" << endl;
 	var1 = p1;
 };
 
+ClassB::~ClassB() {
+	cout << "ClassB::~ClassB() - this(" << this << ")" << endl;
+}
+
 class ClassA {
 public:
 	ClassA();
 	ClassA(int parm1, vector<double> parm2, ClassB b);
+	ClassA(const ClassA &);
 	ClassA operator+(ClassA rhand_side);
 	~ClassA();
 	string print();
@@ -57,6 +68,10 @@ ClassA::ClassA() {
 	var1 = 2;
 	vec = vector<double> (2, 2.0);
 	myB = ClassB(2);
+}
+
+ClassA::ClassA(const ClassA& orig) {
+	cout << "ClassA::ClassA(ClassA &) - this(" << this << ")" << endl;
 }
 
 ClassA::ClassA(int parm1, vector<double> parm2, ClassB b) : myB(b) {
