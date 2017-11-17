@@ -23,6 +23,7 @@ public:
 	ClassB(int parm1);
 	ClassB(const ClassB& orig);
 	~ClassB();
+	ClassB& operator= (const ClassB& rhs);
 	int getVar1() {
 		return var1;
 	}
@@ -37,6 +38,7 @@ ClassB::ClassB() {
 
 ClassB::ClassB(const ClassB& orig) {
 	cout << "ClassB::ClassB(ClassB &) - this(" << this << ")" << endl;
+	var1 = orig.var1;
 }
 
 ClassB::ClassB(int p1) {
@@ -46,6 +48,14 @@ ClassB::ClassB(int p1) {
 
 ClassB::~ClassB() {
 	cout << "ClassB::~ClassB() - this(" << this << ")" << endl;
+}
+
+ClassB& ClassB::operator= (const ClassB& rhs) {
+	cout << "ClassB::operator=() - this(" << this << ")" << endl;
+	if (this != &rhs) {
+		var1 = rhs.var1;
+	}
+	return *this;
 }
 
 class ClassA {
