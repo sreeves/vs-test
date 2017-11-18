@@ -10,6 +10,7 @@
 #include <ios>
 #include <cassert>
 #include <sstream>
+#include <cstring>
 
 using namespace std;
 
@@ -19,43 +20,76 @@ enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
 class ClassB {
 public:
+	static const char* default_data;
+
 	ClassB();
-	ClassB(int parm1);
-	ClassB(const ClassB& orig);
-	~ClassB();
-	ClassB& operator= (const ClassB& rhs);
-	int getVar1() {
-		return var1;
-	}
+	ClassB(const ClassB& orig);						//copy constructor
+	ClassB(ClassB&& other) noexcept;					//move constructor
+	ClassB(int parm1, const string& parm2);
+	~ClassB() noexcept;
+	ClassB& operator= (const ClassB& rhs);			//copy assignment operator
+	ClassB& operator= (ClassB&& rhs) noexcept;	//move assignment operator
+	ClassB operator+ (const ClassB& rhs);
+	int GetVar1() { return var1; }
+	const string& GetData() const { return *data; }
 private:
+	friend std::ostream& operator<< (std::ostream& os, const ClassB& b) {
+		os << "ClassB.var1: " << b.var1 << " ClassB.data: " << *b.data << endl;
+		return os;
+	}
+
+	string *data;
 	int var1;
 };
 
-ClassB::ClassB() {
+const char* ClassB::default_data = "No Data";
+
+ClassB::ClassB() : data(new string(default_data)) {
 	cout << "ClassB::ClassB() - this(" << this << ")" << endl;
 	var1 = 2;
 }
 
-ClassB::ClassB(const ClassB& orig) {
-	cout << "ClassB::ClassB(ClassB &) - this(" << this << ")" << endl;
+ClassB::ClassB(const ClassB& orig) : data(new string(*(orig.data))) {
+	cout << "ClassB::ClassB(const ClassB &) - this(" << this << ")" << endl;
 	var1 = orig.var1;
 }
 
-ClassB::ClassB(int p1) {
-	cout << "ClassB::ClassB(int) - this(" << this << ")" << endl;
+ClassB::ClassB(ClassB&& other) noexcept : data(other.data) {
+	cout << "ClassB::ClassB(ClassB &&) - this(" << this << ")" << endl;
+	other.data = nullptr;
+	var1 = other.var1;
+}
+
+ClassB::ClassB(int p1, const string& s1) : data(new string(s1)) {
+	cout << "ClassB::ClassB(int, const string&) - this(" << this << ")" << endl;
 	var1 = p1;
 };
 
-ClassB::~ClassB() {
+ClassB::~ClassB() noexcept {
 	cout << "ClassB::~ClassB() - this(" << this << ")" << endl;
+	delete data;
 }
 
 ClassB& ClassB::operator= (const ClassB& rhs) {
-	cout << "ClassB::operator=() - this(" << this << ")" << endl;
+	cout << "ClassB::operator=(const ClassB&) - this(" << this << ")" << endl;
 	if (this != &rhs) {
-		var1 = rhs.var1;
+		ClassB temp(rhs);				//re-use copy constructor
+		*this = std::move(temp);	//re-use move assignment
 	}
 	return *this;
+}
+
+ClassB& ClassB::operator= (ClassB&& rhs) noexcept {
+	delete data;
+	data = rhs.data;
+	rhs.data = nullptr;
+	var1 = rhs.var1;
+	return *this;
+}
+
+ClassB ClassB::operator+ (const ClassB& rhs) {
+	cout << "ClassB::operator+(const ClassB&) - this(" << this << ")" << endl;
+	return ClassB(this->var1 + rhs.var1, *this->data + *rhs.data);
 }
 
 class ClassA {
@@ -77,7 +111,7 @@ ClassA::ClassA() {
 	cout << "ClassA::ClassA() - this(" << this << ")" << endl;
 	var1 = 2;
 	vec = vector<double> (2, 2.0);
-	myB = ClassB(2);
+	myB = ClassB(2, "blank");
 }
 
 ClassA::ClassA(const ClassA& orig) {
@@ -95,13 +129,12 @@ ClassA::~ClassA() {
 }
 
 ClassA ClassA::operator+(ClassA rhs) {
-	return ClassA(this->var1 + rhs.var1, vector<double>() ,
-		ClassB(myB.getVar1() + rhs.myB.getVar1()));
+	return ClassA(this->var1 + rhs.var1, vector<double>() , this->myB + rhs.myB);
 }
 
 string ClassA::print() {
 	ostringstream outStream;
-	outStream << "ClassA this: " << this << " var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.getVar1() << endl;
+	outStream << "ClassA this: " << this << " var1=" << var1 << " vec size =" << vec.size() << " myB=" << myB.GetVar1() << endl;
 	return outStream.str();
 }
 
@@ -143,8 +176,8 @@ void dostuff3() {
 	// for(auto it = std::begin(foo); it != std::end(foo); ++it) {
 	// 	cout << *it << " ";
 	// }
-	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3));
-	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6));
+	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo"));
+	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo"));
 	myContainer[2] = myContainer[0] + myContainer[1];
 	cout << myContainer[2].print() << endl;
 	delete[] myContainer;
