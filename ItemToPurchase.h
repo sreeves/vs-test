@@ -1,3 +1,6 @@
+#ifndef ItemToPurchase_header
+#define ItemToPurchase_header
+
 #include <string>
 using namespace std;
 
@@ -24,4 +27,5 @@ private:
    string itemDescription;
 };
 
+#endif
 
