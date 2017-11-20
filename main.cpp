@@ -6,7 +6,7 @@
 using namespace std;
 
 void GetInfo(ItemToPurchase& item) {
-   cin.ignore();
+   //cin.ignore();
    string itemName;
    double itemPrice = 0.0;
    int itemQuantity = 0;
@@ -57,6 +57,10 @@ int main() {
    ItemToPurchase newItem;
    string itemName;
    int newQuantity;
+   int precision = 2;
+   int debug = 0;
+
+   cout << fixed << setprecision(2);
 
    cout << "Enter Customer's Name: " << endl;
    getline(cin, userName);
@@ -67,6 +71,14 @@ int main() {
    do {
       cout << "Enter option: " << endl;
       cin >> userChoice;
+
+      if(cin.peek() == '\n') {
+         cin.ignore();
+      }
+      if(!cin.good() && !cin.eof()) {
+         cout << endl << "ERROR" << endl;
+      }
+
       if (userChoice == "options") {
          PrintMenu();
       }
@@ -80,21 +92,21 @@ int main() {
       }
       else if (userChoice == "remove") {
          cout << "Enter name of the item to remove: " << endl;
-         cin >> itemName;
+         getline(cin, itemName);
          myCart.RemoveItem(itemName);
-         cin.ignore(); 
       }
       else if (userChoice == "change") {
-         cout << "Enter name of the item name: " << endl;
-         cin >> itemName;
+         cout << "Enter the item name: " << endl;
+         getline(cin, itemName);
+         //cin.ignore();
          cout << "Enter the new quantity: " << endl;
          cin >> newQuantity;
          myCart.ChangeQuantity(itemName, newQuantity);
          cin.ignore();
+         cin.clear();
       }
       else if (userChoice == "descriptions") {
          cout << myCart.GetName() << "'s Shopping Cart - " << myCart.GetDate() << endl;
-         cout << "Item Descriptions" << endl;
          myCart.PrintDescriptions();
       }
       else if (userChoice == "cart") {
@@ -107,10 +119,9 @@ int main() {
       else {
          PrintMenu();
       }
+      
 
-
-
-   } while(!done);
+   } while(!done && debug++ < 200);
 
 
 
