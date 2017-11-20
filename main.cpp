@@ -1,88 +1,147 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <sstream>
 #include <iomanip>
+#include "ItemToPurchase.h"
+#include "ShoppingCart.h"
 
 using namespace std;
 
-class Student {
-public:
-	Student(string name = "not intialized", double GPA = 0.0);
-	void SetName(string studentName);
-	void SetGPA(double personName);
-	string ToString() const;
-private:
-	string name;
-	double GPA;
-};
-
-Student::Student(string initialName, double initialGPA) {
-	name = initialName;
-	GPA = initialGPA;
+void GetInfo(ItemToPurchase& item) {
+   //cin.ignore();
+   string itemName;
+   double itemPrice = 0.0;
+   int itemQuantity = 0;
+   string itemDescription;
+   string enterName = "Enter the item name: ";
+   string enterPrice = "Enter the item price: ";
+   string enterQuantity = "Enter the item quantity: ";
+   string enterDescription = "Enter the item description: ";
+   cout << enterName << endl;
+   getline(cin, itemName);
+   //item.SetName(itemName);
+   cout << enterDescription << endl;
+   getline(cin, itemDescription);
+   
+   cout << enterPrice << endl;
+   cin >> itemPrice;
+   //item.SetName(itemName);
+   //item.SetPrice(itemPrice);
+   cout << enterQuantity << endl;
+   cin >> itemQuantity;
+   //item.SetQuantity(itemQuantity);
+   item = ItemToPurchase(itemName, itemDescription, itemPrice, itemQuantity);
+   cin.ignore();
+   
+   cout << endl;
+   
+   return;
 }
 
-void Student::SetName(string inputName) {
-	name = inputName;
+void PrintMenu() {
+   cout << "MENU" << endl;
+   cout << "add - Add item to cart" << endl;
+   cout << "remove - Remove item from cart" << endl;
+   cout << "change - Change item quantity" << endl;
+   cout << "descriptions - Output items' descriptions" << endl;
+   cout << "cart - Output shopping cart" << endl;
+   cout << "options - Print the options menu" << endl;
+   cout << "quit - Quit" << endl;
+   return;
 }
 
-void Student::SetGPA(double newGPA) {
-	GPA = newGPA;
-}
 
-//Insert the ToString member function here
-string Student::ToString() const {
-   ostringstream studentInfo;
-   int precision = 1;
-   studentInfo << fixed;
-   studentInfo << setprecision(precision);
-   studentInfo << name << " has a GPA of " << GPA;
-   return studentInfo.str();
-}
+int main() {
+   string userName;
+   string userDate;
+   bool done = false;
+   string userChoice;
+   ItemToPurchase newItem;
+   string itemName;
+   int newQuantity;
+   int precision = 2;
+   int debug = 0;
 
-int mainX() {
-	vector<Student*> students;
-	bool quit = false;
-	string userChoice;
-	string addedName;
-	double addedGPA = 0.0;
-	Student* student = nullptr;
-	string studentInfo;
-	int indexDropStudent = 0;
+   cout << fixed << setprecision(2);
+
+   cout << "Enter Customer's Name: " << endl;
+   getline(cin, userName);
+   cout << "Enter Today's Date: " << endl;
+   getline(cin, userDate);
+   ShoppingCart myCart = ShoppingCart(userName, userDate);
+
+   do {
+      cout << "Enter option: " << endl;
+      cin >> userChoice;
+
+      if(cin.peek() == '\n') {
+         cin.ignore();
+      }
+      if(!cin.good() && !cin.eof()) {
+         cout << endl << "ERROR" << endl;
+      }
+
+      if (userChoice == "options") {
+         PrintMenu();
+      }
+      else if (userChoice == "quit"){
+         cout << "Goodbye." << endl;
+         done = true;
+      }
+      else if (userChoice == "add") {
+         GetInfo(newItem);
+         myCart.AddItem(newItem);
+      }
+      else if (userChoice == "remove") {
+         cout << "Enter name of the item to remove: " << endl;
+         getline(cin, itemName);
+         myCart.RemoveItem(itemName);
+      }
+      else if (userChoice == "change") {
+         cout << "Enter the item name: " << endl;
+         getline(cin, itemName);
+         //cin.ignore();
+         cout << "Enter the new quantity: " << endl;
+         cin >> newQuantity;
+         myCart.ChangeQuantity(itemName, newQuantity);
+         cin.ignore();
+         cin.clear();
+      }
+      else if (userChoice == "descriptions") {
+         cout << myCart.GetName() << "'s Shopping Cart - " << myCart.GetDate() << endl;
+         myCart.PrintDescriptions();
+      }
+      else if (userChoice == "cart") {
+         int numItems = 0;
+         double totalPrice = 0.0;
+         cout << myCart.GetName() << "'s Shopping Cart - " << myCart.GetDate() << endl;
+         myCart.NumItemsAndPrice(numItems, totalPrice);
+         
+      }
+      else {
+         PrintMenu();
+      }
+      
+
+   } while(!done && debug++ < 200);
 
 
-	
-	do {
-		cout << "Enter Option: " << endl;
-		cin >> userChoice;
-		
-		if (userChoice == "add"){
-			cout << "Student name: " << endl;
-			cin >> addedName;
-			cout << addedName << "'s GPA: " << endl;
-			cin >> addedGPA;
-			student = new Student(addedName, addedGPA);
-			students.push_back(student);
-		}
-		else if (userChoice == "print") {
-			for (int i = 0; i < students.size(); ++i) {
-				studentInfo = students.at(i)->ToString();
-				cout << i << ": " <<  studentInfo << endl;
-			}
-		}
-		else if (userChoice == "drop") {
-			cout << "Index of student to drop: " << endl;
-			cin >> indexDropStudent;
-			delete students.at(indexDropStudent);
-			students.erase(students.begin() + indexDropStudent);
-		}
-		else {
-			quit = true;
-		}
 
 
-	} while (!quit);
-	
+   // ItemToPurchase item1;
+   // ItemToPurchase item2;
+   // int setPrecision = 2;
 
-	return 0;
+
+   // cout << "Item 1" << endl;
+   // GetInfo(item1);
+
+   // cout << "Item 2" << endl;
+   // GetInfo(item2);
+   
+   // cout << fixed << setprecision(setPrecision);
+   // cout << "TOTAL COST" << endl;
+   // cout << item1.GetName() << " " << item1.GetQuantity() << " @  $" << item1.GetPrice() << " = $" << item1.GetQuantity() * item1.GetPrice() << endl;
+   // cout << item2.GetName() << " " << item2.GetQuantity() << " @  $" << item2.GetPrice() << " = $" << item2.GetQuantity() * item2.GetPrice() << endl;
+   // cout << "Total: $" << (item1.GetQuantity() * item1.GetPrice()) + (item2.GetQuantity() * item2.GetPrice());
+   
+   return 0;
 }

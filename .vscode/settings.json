@@ -5,6 +5,7 @@
         "ostream": "cpp",
         "array": "cpp",
         "bitset": "cpp",
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "*.tcc": "cpp"
     }
 }
