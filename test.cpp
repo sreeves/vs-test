@@ -25,16 +25,27 @@ public:
 	ClassB();
 	ClassB(const ClassB& orig);						//copy constructor
 	ClassB(ClassB&& other) noexcept;					//move constructor
-	ClassB(int parm1, const string& parm2);
+	ClassB(int parm1, const string& parm2, int parm3);
 	~ClassB() noexcept;
 	ClassB& operator= (const ClassB& rhs);			//copy assignment operator
 	ClassB& operator= (ClassB&& rhs) noexcept;	//move assignment operator
 	ClassB operator+ (const ClassB& rhs);
 	int GetVar1() { return var1; }
 	const string& GetData() const { return *data; }
+	string print() {
+		ostringstream os;
+		os << *this;
+		return os.str();
+	}
+
+	string print(string prefix) {
+		return prefix + print();
+	}
+protected:
+	int p2;
 private:
 	friend std::ostream& operator<< (std::ostream& os, const ClassB& b) {
-		os << "ClassB.var1: " << b.var1 << " ClassB.data: " << *b.data << endl;
+		os << "ClassB.var1: " << b.var1 << " ClassB.data: " << *b.data << " ClassB.p2 " << b.p2 << endl;
 		return os;
 	}
 
@@ -47,22 +58,26 @@ const char* ClassB::default_data = "No Data";
 ClassB::ClassB() : data(new string(default_data)) {
 	cout << "ClassB::ClassB() - this(" << this << ")" << endl;
 	var1 = 2;
+	p2 = 2;
 }
 
 ClassB::ClassB(const ClassB& orig) : data(new string(*(orig.data))) {
 	cout << "ClassB::ClassB(const ClassB &) - this(" << this << ")" << endl;
 	var1 = orig.var1;
+	p2 = orig.p2;
 }
 
 ClassB::ClassB(ClassB&& other) noexcept : data(other.data) {
 	cout << "ClassB::ClassB(ClassB &&) - this(" << this << ")" << endl;
 	other.data = nullptr;
 	var1 = other.var1;
+	p2 = other.p2;
 }
 
-ClassB::ClassB(int p1, const string& s1) : data(new string(s1)) {
-	cout << "ClassB::ClassB(int, const string&) - this(" << this << ")" << endl;
+ClassB::ClassB(int p1, const string& s1, int p2) : data(new string(s1)) {
+	cout << "ClassB::ClassB(int, const string&, int) - this(" << this << ")" << endl;
 	var1 = p1;
+	this->p2 = p2;
 };
 
 ClassB::~ClassB() noexcept {
@@ -84,12 +99,30 @@ ClassB& ClassB::operator= (ClassB&& rhs) noexcept {
 	data = rhs.data;
 	rhs.data = nullptr;
 	var1 = rhs.var1;
+	p2 = rhs.p2;
 	return *this;
 }
 
 ClassB ClassB::operator+ (const ClassB& rhs) {
 	cout << "ClassB::operator+(const ClassB&) - this(" << this << ")" << endl;
-	return ClassB(this->var1 + rhs.var1, *this->data + *rhs.data);
+	return ClassB(this->var1 + rhs.var1, *this->data + *rhs.data, this->p2 + rhs.p2);
+}
+
+class SubB : public ClassB {
+public:
+	SubB(int x=8);
+	int GetX() { return x + p2 + GetVar1(); }
+	string print() {
+		ostringstream os(ClassB::print());
+		os <<  " " << " SubB:x=" << x;
+		return os.str();
+	}
+private:
+	int x;
+};
+
+SubB::SubB(int x) : x(x), ClassB(4, string("SubB dude"), 4) {
+	p2 = 4;
 }
 
 class ClassA {
@@ -111,7 +144,7 @@ ClassA::ClassA() {
 	cout << "ClassA::ClassA() - this(" << this << ")" << endl;
 	var1 = 2;
 	vec = vector<double> (2, 2.0);
-	myB = ClassB(2, "blank");
+	myB = ClassB(2, "blank", 2);
 }
 
 ClassA::ClassA(const ClassA& orig) {
@@ -144,9 +177,14 @@ string ClassA::print() {
 // }
 
 void dostuff3() {
-	// int bits = 0xFFFF;
-	// bits = bits ^ 0xFF;
-	// cout << hex << bits << endl;
+	SubB sb1(90);
+	cout << sb1.print() << endl;
+	ClassB& b = sb1;
+	ClassB b2 = b;
+	ClassB b3 = sb1;
+	cout << sb1.print() << endl;
+	// cout << sb1.print(string("Prefix Dude:")) << endl;
+	cout << b.print() << endl;
 
 	// int n=42;
 	// double a[n][5];
@@ -176,8 +214,8 @@ void dostuff3() {
 	// for(auto it = std::begin(foo); it != std::end(foo); ++it) {
 	// 	cout << *it << " ";
 	// }
-	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo"));
-	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo"));
+	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo", 3));
+	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo", 6));
 	myContainer[2] = myContainer[0] + myContainer[1];
 	cout << myContainer[2].print() << endl;
 	delete[] myContainer;
