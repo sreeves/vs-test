@@ -1,3 +1,11 @@
+/*
+Alexis Reeves, Section 02, lexinreeves@gmail.com
+Description: Includes Shopping Cart class. Defines public functions for adding, removing, changing quantity, printing descriptions,
+and printing total items and price. 
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #include <iostream>
 #include <vector>
 #include "ShoppingCart.h"
@@ -9,11 +17,11 @@ ShoppingCart::ShoppingCart(string customerName, string date) {
    this->date = date;
 }
 
-string ShoppingCart::GetName() {
+string ShoppingCart::GetName() const {
    return this->customerName;
 }
 
-string ShoppingCart::GetDate() {
+string ShoppingCart::GetDate() const {
    return this->date;
 }
 
@@ -35,7 +43,6 @@ void ShoppingCart::RemoveItem(string item) {
          return;
       }
    }
-   
    cout << "Item not found in cart. Nothing removed." << endl;
    return;
 }
@@ -52,11 +59,11 @@ void ShoppingCart::ChangeQuantity(string itemName, int newQuantity) {
    if (!found) {
       cout << "Item not found in cart. Nothing modified." << endl;
    }
-   
+
    return;
 }
 
-void ShoppingCart::PrintDescriptions() { 
+void ShoppingCart::PrintDescriptions() const { 
    if (items.size() == 0) {
       cout << "Shopping cart is empty." << endl;
       return;
@@ -65,20 +72,21 @@ void ShoppingCart::PrintDescriptions() {
    for (int i = 0; i < items.size(); ++i) {
       cout << items.at(i).GetName() << ": " << items.at(i).GetDescription() << endl;
    }
+
+   return;
 }
 
-void ShoppingCart::NumItemsAndPrice(int& numItems, double& totalPrice) {
+void ShoppingCart::NumItemsAndPrice(int& numItems, double& totalPrice) const {
    if(items.size() == 0) {
       cout << "Shopping cart is empty." << endl;
       return;
    }
 
    for(int i = 0; i < items.size(); ++i) {
-   numItems = numItems + (items.at(i).GetQuantity());
+      numItems = numItems + (items.at(i).GetQuantity());
    }
 
    cout << "Number of Items: " << numItems << endl << endl;
-   
    totalPrice = 0.0;
    
    for(int i = 0; i < items.size(); ++i) {

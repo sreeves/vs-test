@@ -1,147 +1,113 @@
 #include <iostream>
-#include <iomanip>
-#include "ItemToPurchase.h"
-#include "ShoppingCart.h"
+#include <vector>
+#include "Playlist.h"
+#include "Song.h"
 
 using namespace std;
 
-void GetInfo(ItemToPurchase& item) {
-   //cin.ignore();
-   string itemName;
-   double itemPrice = 0.0;
-   int itemQuantity = 0;
-   string itemDescription;
-   string enterName = "Enter the item name: ";
-   string enterPrice = "Enter the item price: ";
-   string enterQuantity = "Enter the item quantity: ";
-   string enterDescription = "Enter the item description: ";
-   cout << enterName << endl;
-   getline(cin, itemName);
-   //item.SetName(itemName);
-   cout << enterDescription << endl;
-   getline(cin, itemDescription);
-   
-   cout << enterPrice << endl;
-   cin >> itemPrice;
-   //item.SetName(itemName);
-   //item.SetPrice(itemPrice);
-   cout << enterQuantity << endl;
-   cin >> itemQuantity;
-   //item.SetQuantity(itemQuantity);
-   item = ItemToPurchase(itemName, itemDescription, itemPrice, itemQuantity);
-   cin.ignore();
-   
-   cout << endl;
-   
-   return;
+void Add(vector<Song*>& library) {
+    bool stop = false;
+    Song* mySong;
+    string songName;
+    string firstLine;
+    
+    cout << "Read in Song names and first lines (type \"STOP\" when done):" << endl;
+    while (!stop) {
+        cout << "Song Name:" << endl;
+        getline(cin, songName);
+        if (songName == "STOP") {
+            break;
+        }
+        cout << "Song's first line:";
+        getline(cin, firstLine);
+        mySong = new Song(songName, firstLine);
+        library.push_back(mySong);
+    }
+
+    return;
 }
 
-void PrintMenu() {
-   cout << "MENU" << endl;
-   cout << "add - Add item to cart" << endl;
-   cout << "remove - Remove item from cart" << endl;
-   cout << "change - Change item quantity" << endl;
-   cout << "descriptions - Output items' descriptions" << endl;
-   cout << "cart - Output shopping cart" << endl;
-   cout << "options - Print the options menu" << endl;
-   cout << "quit - Quit" << endl;
-   return;
+void List(vector<Song*> library) {
+    
+    for(int i = 0; i < library.size(); ++i) {
+        cout << library.at(i)->GetName() << ": \"" << library.at(i)->GetLine() << "\", " << library.at(i)->GetTimesPlayed() << " play(s)." << endl;
+    }
 }
 
+main() {
+    string userChoice;
+    Song mySongs;
+    vector<Song*> library;
 
-int main() {
-   string userName;
-   string userDate;
-   bool done = false;
-   string userChoice;
-   ItemToPurchase newItem;
-   string itemName;
-   int newQuantity;
-   int precision = 2;
-   int debug = 0;
 
-   cout << fixed << setprecision(2);
+    cout << "Welcome to the Firstline Player!  Enter options to see menu options." << endl;
+    bool quit = false;
 
-   cout << "Enter Customer's Name: " << endl;
-   getline(cin, userName);
-   cout << "Enter Today's Date: " << endl;
-   getline(cin, userDate);
-   ShoppingCart myCart = ShoppingCart(userName, userDate);
+    do {
+        cout << "Enter your selection now:" << endl;
+        cin >> userChoice;
 
-   do {
-      cout << "Enter option: " << endl;
-      cin >> userChoice;
+        if(userChoice == "add") {
+            cin.ignore();
+            Add(library);
+        }
+        else if(userChoice == "list") {
+            List(library);
+        }
+        else if(userChoice == "addsp") {
 
-      if(cin.peek() == '\n') {
-         cin.ignore();
-      }
-      if(!cin.good() && !cin.eof()) {
-         cout << endl << "ERROR" << endl;
-      }
+        }
+        else if(userChoice == "listp") {
 
-      if (userChoice == "options") {
-         PrintMenu();
-      }
-      else if (userChoice == "quit"){
-         cout << "Goodbye." << endl;
-         done = true;
-      }
-      else if (userChoice == "add") {
-         GetInfo(newItem);
-         myCart.AddItem(newItem);
-      }
-      else if (userChoice == "remove") {
-         cout << "Enter name of the item to remove: " << endl;
-         getline(cin, itemName);
-         myCart.RemoveItem(itemName);
-      }
-      else if (userChoice == "change") {
-         cout << "Enter the item name: " << endl;
-         getline(cin, itemName);
-         //cin.ignore();
-         cout << "Enter the new quantity: " << endl;
-         cin >> newQuantity;
-         myCart.ChangeQuantity(itemName, newQuantity);
-         cin.ignore();
-         cin.clear();
-      }
-      else if (userChoice == "descriptions") {
-         cout << myCart.GetName() << "'s Shopping Cart - " << myCart.GetDate() << endl;
-         myCart.PrintDescriptions();
-      }
-      else if (userChoice == "cart") {
-         int numItems = 0;
-         double totalPrice = 0.0;
-         cout << myCart.GetName() << "'s Shopping Cart - " << myCart.GetDate() << endl;
-         myCart.NumItemsAndPrice(numItems, totalPrice);
-         
-      }
-      else {
-         PrintMenu();
-      }
-      
+        }
+        else if(userChoice == "play") {
 
-   } while(!done && debug++ < 200);
+        }
+        else if(userChoice == "delp") {
+
+        }
+        else if(userChoice == "delsp") {
+
+        }
+        else if(userChoice == "delsl") {
+
+        }
+        else if(userChoice == "options") {
+            cout << "add      Adds a list of songs to the library" << endl;
+            cout << "list     Lists all the songs in the library" << endl;
+            cout << "addp     Adds a new playlist" << endl;
+            cout << "addsp    Adds a song to a playlist" << endl;
+            cout << "listp    Lists all the playlists" << endl;
+            cout << "play     Plays a playlist" << endl;
+            cout << "delp     Deletes a playlist" << endl;
+            cout << "delsp    Deletes a song from a playlist" << endl;
+            cout << "delsl    Deletes a song from the library (and all playlists)" << endl;
+            cout << "options  Prints this options menu" << endl;
+            cout << "quit     Quits the program" << endl;
+        }
+        else if(userChoice == "quit") {
+            cout << "Goodbye!";
+            quit = true;
+        }
+        else {
+            cout << "add      Adds a list of songs to the library" << endl;
+            cout << "list     Lists all the songs in the library" << endl;
+            cout << "addp     Adds a new playlist" << endl;
+            cout << "addsp    Adds a song to a playlist" << endl;
+            cout << "listp    Lists all the playlists" << endl;
+            cout << "play     Plays a playlist" << endl;
+            cout << "delp     Deletes a playlist" << endl;
+            cout << "delsp    Deletes a song from a playlist" << endl;
+            cout << "delsl    Deletes a song from the library (and all playlists)" << endl;
+            cout << "options  Prints this options menu" << endl;
+            cout << "quit     Quits the program" << endl;
+        }
+        
+
+    } while (!quit);
 
 
 
 
-   // ItemToPurchase item1;
-   // ItemToPurchase item2;
-   // int setPrecision = 2;
-
-
-   // cout << "Item 1" << endl;
-   // GetInfo(item1);
-
-   // cout << "Item 2" << endl;
-   // GetInfo(item2);
-   
-   // cout << fixed << setprecision(setPrecision);
-   // cout << "TOTAL COST" << endl;
-   // cout << item1.GetName() << " " << item1.GetQuantity() << " @  $" << item1.GetPrice() << " = $" << item1.GetQuantity() * item1.GetPrice() << endl;
-   // cout << item2.GetName() << " " << item2.GetQuantity() << " @  $" << item2.GetPrice() << " = $" << item2.GetQuantity() * item2.GetPrice() << endl;
-   // cout << "Total: $" << (item1.GetQuantity() * item1.GetPrice()) + (item2.GetQuantity() * item2.GetPrice());
-   
-   return 0;
+    return 0;
 }
