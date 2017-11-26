@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void Add(vector<Song*>& library) {
+void AddToLibrary(vector<Song*>& library) {
     bool stop = false;
     Song* mySong;
     string songName;
@@ -27,17 +27,35 @@ void Add(vector<Song*>& library) {
     return;
 }
 
-void List(vector<Song*> library) {
+void List(const vector<Song*>& library) {
     
     for(int i = 0; i < library.size(); ++i) {
         cout << library.at(i)->GetName() << ": \"" << library.at(i)->GetLine() << "\", " << library.at(i)->GetTimesPlayed() << " play(s)." << endl;
     }
 }
 
+void AddToPlaylists(vector<Playlist>& myPlaylists) {
+    string name;
+
+    cout << "Playlist name:" << endl;
+    getline(cin, name);
+    Playlist playList = Playlist(name); 
+    myPlaylists.push_back(name);
+}
+
+void ListPlaylists(const vector<Playlist>& myPlaylists) {
+    for(int i = 0; i < myPlaylists.size(); ++i) {
+        cout << i << ": " << myPlaylists.at(i).GetName() << endl;
+    }
+
+    return;    
+}
+
 main() {
     string userChoice;
     Song mySongs;
     vector<Song*> library;
+    vector<Playlist> myPlaylists;
 
 
     cout << "Welcome to the Firstline Player!  Enter options to see menu options." << endl;
@@ -49,16 +67,20 @@ main() {
 
         if(userChoice == "add") {
             cin.ignore();
-            Add(library);
+            AddToLibrary(library);
         }
         else if(userChoice == "list") {
             List(library);
         }
+        else if(userChoice == "addp") {
+            cin.ignore();
+            AddToPlaylists(myPlaylists);
+        }
         else if(userChoice == "addsp") {
-
+        
         }
         else if(userChoice == "listp") {
-
+            ListPlaylists(myPlaylists);
         }
         else if(userChoice == "play") {
 
@@ -87,6 +109,9 @@ main() {
         }
         else if(userChoice == "quit") {
             cout << "Goodbye!";
+            for(int i = 0; i < library.size(); ++ i) {
+                delete library.at(i);
+            }
             quit = true;
         }
         else {

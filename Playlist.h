@@ -8,9 +8,12 @@ using namespace std;
 
 class Playlist {
 public:
+   Playlist(string name = "none");
+   string GetName() const;
 
 private: 
-    
+   vector<Song*> list;
+   string name;
         
 
 };
