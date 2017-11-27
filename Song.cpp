@@ -1,3 +1,11 @@
+/*
+Alexis Reeves, Section 02, lexinreeves@gmail.com
+Description: Contains public functions for Song class. 
+Done without pair programming and in Visual Studio.
+Freed memory in main.cpp on lines 156, 175
+Late Days: none
+*/
+
 #include <iostream>
 #include "Song.h"
 using namespace std;
@@ -21,6 +29,6 @@ int Song::GetTimesPlayed() const {
 }
 
 void Song::AddTimesPlayed() {
-	this->timesPlayed = ++timesPlayed;
+	this->timesPlayed++;
 	return;
 }

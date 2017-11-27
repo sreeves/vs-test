@@ -1,3 +1,11 @@
+/*
+Alexis Reeves, Section 02, lexinreeves@gmail.com
+Description: Contains public functions for class Playlist.
+Done without pair programming and in Visual Studio.
+Freed memory in main.cpp on lines 156, 175
+Late Days: none
+*/
+
 #include <iostream>
 #include <vector>
 #include "Playlist.h"

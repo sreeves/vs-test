@@ -1,3 +1,11 @@
+/*
+Alexis Reeves, Section 02, lexinreeves@gmail.com
+Description: Defines Playlist class. Provides ability to add and delete songs in a playlist. 
+Done without pair programming and in Visual Studio.
+Freed memory in main.cpp on lines 156, 175
+Late Days: none
+*/
+
 #ifndef Playlist_h
 #define Playlist_h
 
@@ -19,7 +27,5 @@ public:
 private: 
    vector<Song*> list;
    string name;
-        
-
 };
 #endif

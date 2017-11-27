@@ -63,6 +63,7 @@ void ListSongs(const vector<Song*>& library, bool print) {
 			cout << "\", " << library.at(i)->GetTimesPlayed() << " play(s)." << endl;
 		}
 	}
+	return;
 }
 
 void AddToPlaylists(vector<Playlist>& myPlaylists) {
@@ -72,6 +73,7 @@ void AddToPlaylists(vector<Playlist>& myPlaylists) {
 	getline(cin, name);
 	Playlist playList = Playlist(name); 
 	myPlaylists.push_back(name);
+	return;
 }
 
 void ListPlaylists(const vector<Playlist>& myPlaylists) {
@@ -90,7 +92,6 @@ main() {
 	int playlistNum = 0;
 	int songNum = 0;
 	
-
 
 	cout << "Welcome to the Firstline Player!  Enter options to see menu options." << endl;
 	bool quit = false;
@@ -192,9 +193,5 @@ main() {
 		
 
 	} while (!quit);
-
-
-
-
 	return 0;
 }
