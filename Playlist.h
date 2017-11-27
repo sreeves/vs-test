@@ -10,6 +10,11 @@ class Playlist {
 public:
    Playlist(string name = "none");
    string GetName() const;
+   void AddSong(Song* songChoice);
+   void Play() const;
+   void List() const;
+   void DeleteSong(int songChoice);
+   void Delete(string songName);
 
 private: 
    vector<Song*> list;

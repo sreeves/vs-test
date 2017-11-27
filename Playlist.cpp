@@ -11,3 +11,41 @@ string Playlist::GetName() const {
    return this->name;
 }
 
+void Playlist::AddSong(Song* songChoice) {
+   list.push_back(songChoice);
+   return;
+}
+
+void Playlist::Play() const {
+   for(int i = 0; i < list.size(); ++i) {
+      cout << list.at(i)->GetLine() << endl;
+      list.at(i)->AddTimesPlayed();
+   }
+   return;
+}
+
+void Playlist::DeleteSong(int songChoice) {
+   list.erase(list.begin() + songChoice);
+   return;
+}
+
+void Playlist::List() const {
+   for(int i = 0; i < list.size(); ++i) {
+      cout << i << ": " << list.at(i)->GetName() << endl;
+   }
+   return;
+}
+
+void Playlist::Delete(string songName) {
+   for(int i = 0; i < list.size(); ++i) {
+      if(songName == list.at(i)->GetName()) {
+         DeleteSong(i);
+         --i;
+      }
+   }
+   return;
+}
+
+
+
+

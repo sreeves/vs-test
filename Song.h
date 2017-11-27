@@ -13,6 +13,7 @@ public:
     string GetName() const;
     string GetLine() const;
     int GetTimesPlayed() const;
+    void AddTimesPlayed();
 
 private: 
     string songName;
