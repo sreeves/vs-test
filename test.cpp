@@ -18,6 +18,11 @@ enum WinPosEnum { NORMAL, MAX, MIN, LEFT, RIGHT };
 enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 //enum class WinPosEnum_class { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
+class BaseClass {
+public:
+	virtual void TestFunc() = 0;
+};
+
 class ClassB {
 public:
 	static const char* default_data;
@@ -32,7 +37,7 @@ public:
 	ClassB operator+ (const ClassB& rhs);
 	int GetVar1() { return var1; }
 	const string& GetData() const { return *data; }
-	string print() {
+	virtual string print() {
 		ostringstream os;
 		os << *this;
 		return os.str();
@@ -45,7 +50,7 @@ protected:
 	int p2;
 private:
 	friend std::ostream& operator<< (std::ostream& os, const ClassB& b) {
-		os << "ClassB.var1: " << b.var1 << " ClassB.data: " << *b.data << " ClassB.p2 " << b.p2 << endl;
+		os << "ClassB.var1: " << b.var1 << " ClassB.data: \"" << *b.data << "\" ClassB.p2 " << b.p2;
 		return os;
 	}
 
@@ -111,9 +116,9 @@ ClassB ClassB::operator+ (const ClassB& rhs) {
 class SubB : public ClassB {
 public:
 	SubB(int x=8);
-	int GetX() { return x + p2 + GetVar1(); }
+	int GetX_TestAccess() { return x + p2 + GetVar1(); }
 	string print() {
-		ostringstream os(ClassB::print());
+		ostringstream os(ClassB::print(), ios_base::ate);
 		os <<  " " << " SubB:x=" << x;
 		return os.str();
 	}
@@ -178,13 +183,17 @@ string ClassA::print() {
 
 void dostuff3() {
 	SubB sb1(90);
-	cout << sb1.print() << endl;
-	ClassB& b = sb1;
-	ClassB b2 = b;
+	ClassB& br = sb1;
+	ClassB *bp = &sb1;
+
+	ClassB b2 = br;
 	ClassB b3 = sb1;
 	cout << sb1.print() << endl;
+	cout << br.print() << endl;
+	cout << bp->print() << endl;
+	cout << sb1.ClassB::print() << endl;
+	//cout << bp->SubB::print() << endl;
 	// cout << sb1.print(string("Prefix Dude:")) << endl;
-	cout << b.print() << endl;
 
 	// int n=42;
 	// double a[n][5];
