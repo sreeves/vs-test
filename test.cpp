@@ -18,6 +18,7 @@ enum WinPosEnum { NORMAL, MAX, MIN, LEFT, RIGHT };
 enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 //enum class WinPosEnum_class { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
+/*
 class BaseClass {
 public:
 	virtual void TestFunc() = 0;
@@ -37,12 +38,7 @@ public:
 	ClassB operator+ (const ClassB& rhs);
 	int GetVar1() { return var1; }
 	const string& GetData() const { return *data; }
-	virtual string print() {
-		ostringstream os;
-		os << *this;
-		return os.str();
-	}
-
+	virtual string print();
 	string print(string prefix) {
 		return prefix + print();
 	}
@@ -113,15 +109,17 @@ ClassB ClassB::operator+ (const ClassB& rhs) {
 	return ClassB(this->var1 + rhs.var1, *this->data + *rhs.data, this->p2 + rhs.p2);
 }
 
+string ClassB::print() {
+	ostringstream os("ClassB::print() - ", ios_base::ate);
+	os << *this;
+	return os.str();
+}
+
 class SubB : public ClassB {
 public:
 	SubB(int x=8);
 	int GetX_TestAccess() { return x + p2 + GetVar1(); }
-	string print() {
-		ostringstream os(ClassB::print(), ios_base::ate);
-		os <<  " " << " SubB:x=" << x;
-		return os.str();
-	}
+	string print();
 private:
 	int x;
 };
@@ -130,6 +128,25 @@ SubB::SubB(int x) : x(x), ClassB(4, string("SubB dude"), 4) {
 	p2 = 4;
 }
 
+string SubB::print() {
+		ostringstream os("SubB::print() - ", ios_base::ate);
+		os <<  ClassB::print() << " " << " SubB:x=" << x;
+		return os.str();
+}
+*/
+
+class GSubSubB {
+public:
+	// GSubSubB(int x=45);
+	string poprint();
+private:
+	int sub_subb_x;
+};
+
+// GSubSubB::GSubSubB(int x) { sub_subb_x = x; }
+string GSubSubB::poprint() { return "foo"; }
+
+/*
 class ClassA {
 public:
 	ClassA();
@@ -180,19 +197,26 @@ string ClassA::print() {
 // 	ClassA result = ClassA();
 // 	return result;
 // }
+*/
 
 void dostuff3() {
-	SubB sb1(90);
-	ClassB& br = sb1;
-	ClassB *bp = &sb1;
+	// SubB sb1(90);
+	GSubSubB ssbb();
 
-	ClassB b2 = br;
-	ClassB b3 = sb1;
-	cout << sb1.print() << endl;
-	cout << br.print() << endl;
-	cout << bp->print() << endl;
-	cout << sb1.ClassB::print() << endl;
-	//cout << bp->SubB::print() << endl;
+	// ClassB& br = sb1;
+	// ClassB *bp = &sb1;
+	// ClassB b2 = br;
+	// ClassB b3 = sb1;
+	cout << ssbb.poprint();
+	// cout << sb1.print() << endl;
+	// cout << br.print() << endl;
+	// cout << bp->print() << endl;
+	// cout << sb1.ClassB::print() << endl;
+	// cout << b2.print() << endl;
+	// cout << b3.print() << endl;
+	// cout << sb1 << endl;
+	// cout << br << endl;
+	// cout << bp->SubB::print() << endl;
 	// cout << sb1.print(string("Prefix Dude:")) << endl;
 
 	// int n=42;
@@ -218,18 +242,18 @@ void dostuff3() {
 	// cout << endl;
 
 	// ClassA * myContainer2 = new ClassA[3] (2, vector<double> (1, 2.0), ClassB(3));
-	ClassA * myContainer = new ClassA[3];
-	int foo[] = {0, 1, 3, 5, 7};
+	// ClassA * myContainer = new ClassA[3];
+	// int foo[] = {0, 1, 3, 5, 7};
 	// for(auto it = std::begin(foo); it != std::end(foo); ++it) {
 	// 	cout << *it << " ";
 	// }
-	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo", 3));
-	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo", 6));
-	myContainer[2] = myContainer[0] + myContainer[1];
-	cout << myContainer[2].print() << endl;
-	delete[] myContainer;
+	// myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo", 3));
+	// myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo", 6));
+	// myContainer[2] = myContainer[0] + myContainer[1];
+	// cout << myContainer[2].print() << endl;
+	// delete[] myContainer;
 
-	const char * myP = "wow";
+	// const char * myP = "wow";
 }
 
 int dostuff1()
