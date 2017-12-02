@@ -18,13 +18,18 @@ enum WinPosEnum { NORMAL, MAX, MIN, LEFT, RIGHT };
 enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 //enum class WinPosEnum_class { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
-/*
 class BaseClass {
 public:
-	virtual void TestFunc() = 0;
+	virtual string print() const = 0;
+	void print2();
 };
 
-class ClassB {
+void BaseClass::print2() {
+	this->print();
+	print();
+}
+
+class ClassB : public BaseClass {
 public:
 	static const char* default_data;
 
@@ -38,15 +43,15 @@ public:
 	ClassB operator+ (const ClassB& rhs);
 	int GetVar1() { return var1; }
 	const string& GetData() const { return *data; }
-	virtual string print();
-	string print(string prefix) {
+	virtual string print() const;
+	string print(string prefix) const {
 		return prefix + print();
 	}
 protected:
 	int p2;
 private:
 	friend std::ostream& operator<< (std::ostream& os, const ClassB& b) {
-		os << "ClassB.var1: " << b.var1 << " ClassB.data: \"" << *b.data << "\" ClassB.p2 " << b.p2;
+		os << "ClassB::var1 " << b.var1 << " ClassB::data \"" << *b.data << "\" ClassB::p2 " << b.p2;
 		return os;
 	}
 
@@ -109,7 +114,7 @@ ClassB ClassB::operator+ (const ClassB& rhs) {
 	return ClassB(this->var1 + rhs.var1, *this->data + *rhs.data, this->p2 + rhs.p2);
 }
 
-string ClassB::print() {
+string ClassB::print() const {
 	ostringstream os("ClassB::print() - ", ios_base::ate);
 	os << *this;
 	return os.str();
@@ -119,7 +124,7 @@ class SubB : public ClassB {
 public:
 	SubB(int x=8);
 	int GetX_TestAccess() { return x + p2 + GetVar1(); }
-	string print();
+	string print() const;
 private:
 	int x;
 };
@@ -128,25 +133,28 @@ SubB::SubB(int x) : x(x), ClassB(4, string("SubB dude"), 4) {
 	p2 = 4;
 }
 
-string SubB::print() {
+string SubB::print() const {
 		ostringstream os("SubB::print() - ", ios_base::ate);
-		os <<  ClassB::print() << " " << " SubB:x=" << x;
+		os << ClassB::print() << " SubB::x " << x;
 		return os.str();
 }
-*/
 
-class GSubSubB {
+class SubSubB : public SubB {
 public:
-	// GSubSubB(int x=45);
-	string poprint();
+	SubSubB(int x=45);
+	string print() const;
 private:
-	int sub_subb_x;
+	int sbbx;
 };
 
-// GSubSubB::GSubSubB(int x) { sub_subb_x = x; }
-string GSubSubB::poprint() { return "foo"; }
+SubSubB::SubSubB(int x) { sbbx = x; }
 
-/*
+string SubSubB::print() const {
+	ostringstream os;
+	os << "SubSubB::print() - " << SubB::print() << " SubSubB::sbbx " << sbbx;
+	return os.str();
+}
+
 class ClassA {
 public:
 	ClassA();
@@ -197,25 +205,30 @@ string ClassA::print() {
 // 	ClassA result = ClassA();
 // 	return result;
 // }
-*/
 
 void dostuff3() {
-	// SubB sb1(90);
-	GSubSubB ssbb();
+	SubB sb1(90);
+	SubSubB ssb;
+	ClassB *a = new SubSubB();
+	cout << a->print() << endl;
 
-	// ClassB& br = sb1;
-	// ClassB *bp = &sb1;
-	// ClassB b2 = br;
-	// ClassB b3 = sb1;
-	cout << ssbb.poprint();
-	// cout << sb1.print() << endl;
-	// cout << br.print() << endl;
-	// cout << bp->print() << endl;
-	// cout << sb1.ClassB::print() << endl;
-	// cout << b2.print() << endl;
-	// cout << b3.print() << endl;
-	// cout << sb1 << endl;
-	// cout << br << endl;
+	ClassB& br = sb1;
+	ClassB& br2 = ssb;
+	SubB& sbr1 = ssb;
+	ClassB *bp = &sb1;
+	ClassB b2 = br;
+	ClassB b3 = sb1;
+	cout << ssb.print() << endl;
+	cout << sb1.print() << endl;
+	cout << br.print() << endl;
+	cout << br2.print() << endl;
+	cout << sbr1.print() << endl;
+	cout << bp->print() << endl;
+	cout << sb1.ClassB::print() << endl;
+	cout << b2.print() << endl;
+	cout << b3.print() << endl;
+	cout << sb1 << endl;
+	cout << br << endl;
 	// cout << bp->SubB::print() << endl;
 	// cout << sb1.print(string("Prefix Dude:")) << endl;
 
