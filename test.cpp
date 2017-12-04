@@ -18,7 +18,18 @@ enum WinPosEnum { NORMAL, MAX, MIN, LEFT, RIGHT };
 enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 //enum class WinPosEnum_class { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
-class ClassB {
+class BaseClass {
+public:
+	virtual string print() const = 0;
+	void print2();
+};
+
+void BaseClass::print2() {
+	this->print();
+	print();
+}
+
+class ClassB : public BaseClass {
 public:
 	static const char* default_data;
 
@@ -32,20 +43,15 @@ public:
 	ClassB operator+ (const ClassB& rhs);
 	int GetVar1() { return var1; }
 	const string& GetData() const { return *data; }
-	string print() {
-		ostringstream os;
-		os << *this;
-		return os.str();
-	}
-
-	string print(string prefix) {
+	virtual string print() const;
+	string print(string prefix) const {
 		return prefix + print();
 	}
 protected:
 	int p2;
 private:
 	friend std::ostream& operator<< (std::ostream& os, const ClassB& b) {
-		os << "ClassB.var1: " << b.var1 << " ClassB.data: " << *b.data << " ClassB.p2 " << b.p2 << endl;
+		os << "ClassB::var1 " << b.var1 << " ClassB::data \"" << *b.data << "\" ClassB::p2 " << b.p2;
 		return os;
 	}
 
@@ -108,21 +114,45 @@ ClassB ClassB::operator+ (const ClassB& rhs) {
 	return ClassB(this->var1 + rhs.var1, *this->data + *rhs.data, this->p2 + rhs.p2);
 }
 
+string ClassB::print() const {
+	ostringstream os("ClassB::print() - ", ios_base::ate);
+	os << *this;
+	return os.str();
+}
+
 class SubB : public ClassB {
 public:
 	SubB(int x=8);
-	int GetX() { return x + p2 + GetVar1(); }
-	string print() {
-		ostringstream os(ClassB::print());
-		os <<  " " << " SubB:x=" << x;
-		return os.str();
-	}
+	int GetX_TestAccess() { return x + p2 + GetVar1(); }
+	string print() const;
 private:
 	int x;
 };
 
 SubB::SubB(int x) : x(x), ClassB(4, string("SubB dude"), 4) {
 	p2 = 4;
+}
+
+string SubB::print() const {
+		ostringstream os("SubB::print() - ", ios_base::ate);
+		os << ClassB::print() << " SubB::x " << x;
+		return os.str();
+}
+
+class SubSubB : public SubB {
+public:
+	SubSubB(int x=45);
+	string print() const;
+private:
+	int sbbx;
+};
+
+SubSubB::SubSubB(int x) { sbbx = x; }
+
+string SubSubB::print() const {
+	ostringstream os;
+	os << "SubSubB::print() - " << SubB::print() << " SubSubB::sbbx " << sbbx;
+	return os.str();
 }
 
 class ClassA {
@@ -178,13 +208,29 @@ string ClassA::print() {
 
 void dostuff3() {
 	SubB sb1(90);
-	cout << sb1.print() << endl;
-	ClassB& b = sb1;
-	ClassB b2 = b;
+	SubSubB ssb;
+	ClassB *a = new SubSubB();
+	cout << a->print() << endl;
+
+	ClassB& br = sb1;
+	ClassB& br2 = ssb;
+	SubB& sbr1 = ssb;
+	ClassB *bp = &sb1;
+	ClassB b2 = br;
 	ClassB b3 = sb1;
+	cout << ssb.print() << endl;
 	cout << sb1.print() << endl;
+	cout << br.print() << endl;
+	cout << br2.print() << endl;
+	cout << sbr1.print() << endl;
+	cout << bp->print() << endl;
+	cout << sb1.ClassB::print() << endl;
+	cout << b2.print() << endl;
+	cout << b3.print() << endl;
+	cout << sb1 << endl;
+	cout << br << endl;
+	// cout << bp->SubB::print() << endl;
 	// cout << sb1.print(string("Prefix Dude:")) << endl;
-	cout << b.print() << endl;
 
 	// int n=42;
 	// double a[n][5];
@@ -209,18 +255,18 @@ void dostuff3() {
 	// cout << endl;
 
 	// ClassA * myContainer2 = new ClassA[3] (2, vector<double> (1, 2.0), ClassB(3));
-	ClassA * myContainer = new ClassA[3];
-	int foo[] = {0, 1, 3, 5, 7};
+	// ClassA * myContainer = new ClassA[3];
+	// int foo[] = {0, 1, 3, 5, 7};
 	// for(auto it = std::begin(foo); it != std::end(foo); ++it) {
 	// 	cout << *it << " ";
 	// }
-	myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo", 3));
-	myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo", 6));
-	myContainer[2] = myContainer[0] + myContainer[1];
-	cout << myContainer[2].print() << endl;
-	delete[] myContainer;
+	// myContainer[0] = ClassA(2, vector<double> (1, 2.0), ClassB(3, "foo", 3));
+	// myContainer[1] = ClassA(5, vector<double> (1, 2.0), ClassB(6, "foo", 6));
+	// myContainer[2] = myContainer[0] + myContainer[1];
+	// cout << myContainer[2].print() << endl;
+	// delete[] myContainer;
 
-	const char * myP = "wow";
+	// const char * myP = "wow";
 }
 
 int dostuff1()
