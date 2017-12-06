@@ -26,8 +26,10 @@ int main () {
 			if(item == "Bread") {
 				cin >> breadType;
 				cin >> number;
-				Bread* myBread = new Bread(breadType, number);
-				myVector.push_back(myBread);
+				for(int i = 0; i < number; ++i) {
+					Bread* myBread = new Bread(breadType);
+					myVector.push_back(myBread);
+				}
 
 			}
 			else if(item == "Layer-cake") {
@@ -42,5 +44,8 @@ int main () {
 		}
 	}
 
+	for(int i = 0; i < myVector.size(); ++i) {
+		delete myVector.at(i);		
+	}
 	return 0;
 }
