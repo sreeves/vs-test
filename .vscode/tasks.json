@@ -6,7 +6,7 @@
         {
             "taskName": "Build-Scott-Test",
             "type": "shell",
-            "command": "g++ -ggdb -O0 -o test.bin main.cpp Playlist.cpp Song.cpp",
+            "command": "g++ -ggdb -O0 -o test.bin main.cpp BakedGood.cpp Bread.cpp CupCake.cpp LayerCake.cpp Cake.cpp",
             // "command": "g++ -ggdb -O0 -o test.bin main.cpp ItemToPurchase.cpp ShoppingCart.cpp",
             // "command": "g++ -ggdb -O0 -o test.bin test.cpp",
             // "command": "g++-6 -ggdb -O0 -o test.bin test.cpp",

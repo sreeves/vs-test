@@ -213,7 +213,21 @@ type1 AddIt(type1 x, type1 y) {
 	return sum;
 }
 
+bool IsPrime(int test, int divisor) {
+	if(test < 2 || divisor < 1)
+		return false;
+	if(divisor == 1) //test equals 2
+		return true;
+	if(test % divisor == 0)
+		return false;
+	return IsPrime(test, divisor-1);
+}
+
 void dostuff3() {
+	for(int x=0; x<1000000; x++) {
+		if (IsPrime(x, x-1)) cout << x << " is prime" << endl;
+	}
+
 	int x,y;
 	int sum = AddIt(x, y);
 	ClassB a1,b1;
