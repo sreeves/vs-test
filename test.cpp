@@ -206,7 +206,19 @@ string ClassA::print() {
 // 	return result;
 // }
 
+template<typename type1>
+type1 AddIt(type1 x, type1 y) {
+	type1 sum;
+	sum = x + y;
+	return sum;
+}
+
 void dostuff3() {
+	int x,y;
+	int sum = AddIt(x, y);
+	ClassB a1,b1;
+	ClassB result = a1 + b1;
+
 	SubB sb1(90);
 	SubSubB ssb;
 	ClassB *a = new SubSubB();
