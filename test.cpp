@@ -213,19 +213,33 @@ type1 AddIt(type1 x, type1 y) {
 	return sum;
 }
 
-bool IsPrime(int test, int divisor) {
-	if(test < 2 || divisor < 1)
-		return false;
-	if(divisor == 1) //test equals 2
+bool IsPrimeRecursive(int test, int divisor) {
+	if(divisor == 1)
 		return true;
 	if(test % divisor == 0)
 		return false;
-	return IsPrime(test, divisor-1);
+	return IsPrimeRecursive(test, divisor-1);
+}
+
+bool IsPrimeLoop(int test) {
+	for(int divisor = test-1; divisor > 1; divisor--) {
+		if(test % divisor == 0)
+			return false;
+	}
+	return true;
+}
+
+bool IsPrime(int num) {
+	if(num < 2 )
+		return false;
+
+	// return IsPrimeRecursive(num, num-1);
+	return IsPrimeLoop(num);
 }
 
 void dostuff3() {
-	for(int x=0; x<1000000; x++) {
-		if (IsPrime(x, x-1)) cout << x << " is prime" << endl;
+	for(int x=00000; x<1000000; x++) {
+		if (IsPrime(x)) cout << x << " is prime" << endl;
 	}
 
 	int x,y;
