@@ -20,9 +20,16 @@ enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
 class BaseClass {
 public:
+	BaseClass(int x=7);
 	virtual string print() const = 0;
 	void print2();
+private:
+	int base_x;
 };
+
+BaseClass::BaseClass(int x) {
+	base_x = x;
+}
 
 void BaseClass::print2() {
 	this->print();
