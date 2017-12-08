@@ -228,8 +228,10 @@ bool IsPrimeRecursive(int test, int divisor) {
 	return IsPrimeRecursive(test, divisor-1);
 }
 
-bool IsPrimeLoop(int test) {
-	for(int divisor = test-1; divisor > 1; divisor--) {
+bool IsPrimeLoop(int test, int limit) {
+	if(test == 2) return true;
+	if(test % 2 == 0) return false;
+	for(int divisor = 3; divisor <= limit; divisor+=2) {
 		if(test % divisor == 0)
 			return false;
 	}
@@ -239,15 +241,17 @@ bool IsPrimeLoop(int test) {
 bool IsPrime(int num) {
 	if(num < 2 )
 		return false;
+	int limit = sqrt(num);
 
-	// return IsPrimeRecursive(num, num-1);
-	return IsPrimeLoop(num);
+	return IsPrimeLoop(num, limit);
+	// return IsPrimeRecursive(num, limit);
 }
 
 void dostuff3() {
-	for(int x=00000; x<1000000; x++) {
-		if (IsPrime(x)) cout << x << " is prime" << endl;
+	for(int x=0; x<20000000; x++) {
+		if(IsPrime(x)) cout  << x << " is prime" << endl;
 	}
+	return;
 
 	int x,y;
 	int sum = AddIt(x, y);
@@ -513,6 +517,6 @@ int main(int argv, char **argc)
 	// dostuff1();
 	//dostuff2();
 	dostuff3();
-	pause();
+	// pause();
 	cout << "done" << endl;
 }
