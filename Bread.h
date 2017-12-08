@@ -16,7 +16,6 @@ protected:
    string breadType;
    const double BREADPRICE = 4.50;
 
-
 };
 
 #endif
