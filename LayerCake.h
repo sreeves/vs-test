@@ -5,10 +5,16 @@
 using namespace std;
 
 class LayerCake : public Cake {
-   public:
+public:
+   LayerCake(string flavor, string frosting, int numLayers);
+   string ToString();
+   double DiscountedPrice(int numGoods);
 
-   protected:
-
+protected:
+   string flavor;
+   string frosting;
+   int numLayers;
+   const double LAYERCAKEPRICE= 9.00;
 };
 
 #endif

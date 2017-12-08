@@ -1,8 +1,8 @@
 #ifndef Cake_header
 #define Cake_header
 #include <iostream>
-#include "BakedGood.h"
 using namespace std;
+#include "BakedGood.h"
 
 class Cake : public BakedGood {
    public:

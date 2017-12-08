@@ -512,8 +512,23 @@ void fooFunc2(const string str) {
 	cout << "fooFunc2 str is " << str << endl;
 }
 
+template<typename myType>
+class CoolClass {
+public:
+	CoolClass<myType>(myType x);
+private:
+	myType x;
+};
+
+template<typename myType>
+CoolClass<myType>::CoolClass(myType typeVal) {
+	x = typeVal;
+}
+
 int main(int argv, char **argc) 
 {
+	CoolClass<int> c1(3);
+	CoolClass<double> c2(3.0);
 	// dostuff1();
 	//dostuff2();
 	dostuff3();

@@ -1,14 +1,18 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <iomanip>
 using namespace std;
 #include "Bread.h"
 
 Bread::Bread(string breadType) {
-   ostringstream ostream;
+   ostringstream os;
+   const int PRECISION = 2;
+	cout << fixed << setprecision(PRECISION);
+   price = BREADPRICE;
    //this->breadType = breadType;
-   ostream << breadType << " bread" << "($" << BREADPRICE << ")" << endl;
-   description = ostream.str();
+   os << breadType << " bread " << BakedGood::ToString();
+   description = os.str();
 }
 
 string Bread::ToString() {

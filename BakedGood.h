@@ -7,6 +7,7 @@ class BakedGood {
    public:
       virtual string ToString() = 0;
       virtual double DiscountedPrice(int numGoods) = 0;
+      
    protected:
       string description;
       double price;
