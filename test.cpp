@@ -11,6 +11,7 @@
 #include <cassert>
 #include <sstream>
 #include <cstring>
+#include <typeinfo>
 
 using namespace std;
 
@@ -29,6 +30,10 @@ private:
 
 BaseClass::BaseClass(int x) {
 	base_x = x;
+}
+
+string BaseClass::print() const {
+	// throw runtime_error("abstract class - can't instantiate and no reason to call directly");
 }
 
 void BaseClass::print2() {
@@ -213,13 +218,6 @@ string ClassA::print() {
 // 	return result;
 // }
 
-template<typename type1>
-type1 AddIt(type1 x, type1 y) {
-	type1 sum;
-	sum = x + y;
-	return sum;
-}
-
 bool IsPrimeRecursive(int test, int divisor) {
 	if(divisor == 1)
 		return true;
@@ -247,16 +245,65 @@ bool IsPrime(int num) {
 	// return IsPrimeRecursive(num, limit);
 }
 
+template<typename type1>
+type1 AddIt(type1 x, type1 y) {
+	type1 sum;
+	sum = x + y;
+	return sum;
+}
+
+template<typename type1, typename type2>
+class MyTemplateClass {
+public:
+	MyTemplateClass(type1 arg1, type2 arg2);
+	MyTemplateClass(type2 arg1);
+	void print();
+private:
+	type1 x;
+	type2 y;
+};
+
+template<typename type1, typename type2>
+MyTemplateClass<type1, type2>::MyTemplateClass(type1 arg1, type2 arg2) : x(arg1), y(arg2) {
+}
+
+template<typename type5, typename type6>
+MyTemplateClass<type5, type6>::MyTemplateClass(type6 arg1) : x(arg1), y(arg1) {
+}
+
+template<typename type5, typename type6>
+void MyTemplateClass<type5, type6>::print() {
+	cout << x << "  " << y << endl;
+}
+
 void dostuff3() {
-	for(int x=0; x<20000000; x++) {
-		if(IsPrime(x)) cout  << x << " is prime" << endl;
+	try {
+		SubSubB *mySB = nullptr;
+		SubSubB *mySB2 = new SubSubB(94);
+		cout << typeid(*mySB2).name() << endl;
+		cout << typeid(*mySB).name() << endl;
 	}
-	return;
+	catch (std::exception& e) {
+		cout << "Caught Exception " << e.what() << endl;
+	}
+	catch (...) {
+		cout << "Generic catch " << endl;
+	}
+
+	// for(int x=0; x<20000000; x++) {
+	// 	if(IsPrime(x)) cout  << x << " is prime" << endl;
+	// }
 
 	int x,y;
 	int sum = AddIt(x, y);
-	ClassB a1,b1;
-	ClassB result = a1 + b1;
+	ClassA a1,b1;
+	ClassA result = AddIt(a1, b1);
+
+	MyTemplateClass<int, double> tc1(3, 4);
+	MyTemplateClass<string, double> tc2("foo", 3.0);
+	MyTemplateClass<string, string> tc3("bar");
+	tc1.print();
+	tc2.print();
 
 	SubB sb1(90);
 	SubSubB ssb;
@@ -280,6 +327,7 @@ void dostuff3() {
 	cout << b3.print() << endl;
 	cout << sb1 << endl;
 	cout << br << endl;
+	// BaseClass bc1();
 	// cout << bp->SubB::print() << endl;
 	// cout << sb1.print(string("Prefix Dude:")) << endl;
 
