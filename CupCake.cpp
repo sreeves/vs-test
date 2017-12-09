@@ -20,5 +20,20 @@ string CupCake::ToString() {
 }
 
 double CupCake::DiscountedPrice(int numGoods) {
+   double discountedPrice;
+   const int NUMFORLARGE = 4;
+   const int NUMFORSMALL = 2;
+   const double LARGEDISCOUNT = .40;
+   const double SMALLDISCOUNT = .30;
 
+   if(numGoods >= NUMFORLARGE) {
+      discountedPrice = numGoods * (price - LARGEDISCOUNT);
+   }
+   else if(numGoods >= NUMFORSMALL) {
+      discountedPrice = numGoods * (price - SMALLDISCOUNT);
+   }
+   else {
+      discountedPrice = numGoods * price;
+   }
+   return discountedPrice;
 }

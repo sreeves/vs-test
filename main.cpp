@@ -16,10 +16,15 @@ int main () {
 	int numLayers;
 	int number;
 	vector<BakedGood*> myVector;
+	vector<BakedGood*> tempVector;
+	int numTimesOrdered = 1;
+	int totalGoods = 0;
+	double total = 0.0;
 	const int PRECISION = 2;
-	
-	
+
 	cout << fixed << setprecision(PRECISION);
+	
+	
 	cout << "**Bread and Cakes Bakery**" << endl << endl;
 	cout << "Enter sub-order (enter \"done\" to finish)" << endl;
 	
@@ -72,10 +77,32 @@ int main () {
 		cout << myVector.at(i)->ToString() << endl;
 	}
 
+	cout << "Invoice:" << endl;
+	cout << "Baked Good" << "\t\t\t\t\t" << "Quantity \t" << "Total" << endl;
+
+	tempVector = myVector;
+	for(int i = 0; i < tempVector.size(); ++i) {
+		for(int j = i + 1; j < tempVector.size(); ++j) {
+			if(tempVector.at(i)->ToString() == tempVector.at(j)->ToString()) {
+				++numTimesOrdered;
+				tempVector.erase(tempVector.begin() + j);
+				--j;
+			}
+		}
+		cout << tempVector.at(i)->ToString() << "\t\t\t" << numTimesOrdered << "\t" << tempVector.at(i)->DiscountedPrice(numTimesOrdered) << endl;
+		totalGoods = totalGoods + numTimesOrdered;
+		total = total + tempVector.at(i)->DiscountedPrice(numTimesOrdered);
+		numTimesOrdered = 1;
+	}
+
+	cout << "Totals" << "\t\t\t" << totalGoods << "\t\t" << total << endl;
+
+
 	for(int i = 0; i < myVector.size(); ++i) {
 		delete myVector.at(i);		
 	}
 
+	cout << "Good Bye" << endl;
 	
 	return 0;
 }

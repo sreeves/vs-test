@@ -7,8 +7,8 @@ using namespace std;
 
 string BakedGood::ToString() {
    const int PRECISION = 2;
-	cout << fixed << setprecision(PRECISION);
    ostringstream os;
+	os << fixed << setprecision(PRECISION);
    os << "($" << price << ")";
    return os.str();
 }

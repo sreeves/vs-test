@@ -11,7 +11,7 @@ LayerCake::LayerCake(string flavor, string frosting, int numLayers) {
       price = LAYERCAKEPRICE + (1.00 * numLayers);
    }
    if(numLayers > 1) {
-      price = price + (3.00 * numLayers);
+      price = price + (3.00 * (numLayers - 1));
    }
 
    ostream << numLayers << "-layer " << flavor << " cake with " << frosting;
@@ -24,5 +24,15 @@ string LayerCake::ToString() {
 }
 
 double LayerCake::DiscountedPrice(int numGoods) {
-   
+   double discountedPrice;
+   const int DISCOUNTNUM = 3;
+   const double DISCOUNTPRICE = 2.00;
+
+   if(numGoods >= DISCOUNTNUM) {
+      discountedPrice = numGoods * (price - DISCOUNTPRICE);
+   }
+   else {
+      discountedPrice = numGoods * price;
+   }
+   return discountedPrice;
 }
