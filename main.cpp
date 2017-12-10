@@ -1,3 +1,25 @@
+
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: Allows user to add Bread, Cupcakes, and LayerCakes. Returns the total shopping list and price with discounts.  
+Done without pair programming and in Visual Studio.
+Late Days: none
+
+Test Case 1: Add one of each item
+   Input: Bread Wheat 1, Cupcake Vanilla chocolate red 1, Layer-cake Chocolate vanilla 1 1, done
+   Expected Output: Totals: Quantity = 3  Total = 15.45
+   Result: Passed
+
+Test Case 2: Add one Cupcake with creamcheese frosting and one without
+   Input:Cupcake Yellow cream-cheese red 1, Cupcake Chocolate chocolate blue 1, done 
+	Expected Output: Totals: Quantity = 2, Total = 4.10
+   Result: Passed
+
+Test Case 3: Buy 4 wheat breads, get 1 for free
+   Input: Bread Wheat 4, done
+   Expected Output: Quantity = 4, Total = 13.50
+   Result: Passed
+	*/
 #include <iostream>
 #include <string>
 #include <vector>

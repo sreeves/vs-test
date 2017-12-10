@@ -10,7 +10,7 @@ CupCake::CupCake(string flavor, string frosting, string colorSprinkles) {
    if(frosting == "cream-cheese") {
       price = CUPCAKEPRICE + .20;
    }
-   ostream << flavor << " cupcake with " << frosting << "frosting and" << colorSprinkles;
+   ostream << flavor << " cupcake with " << frosting << " frosting and " << colorSprinkles;
    ostream << " sprinkles " << BakedGood::ToString();
    description = ostream.str();
 }
