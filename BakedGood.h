@@ -11,7 +11,7 @@ using namespace std;
 
 class BakedGood {
    public:
-      virtual string ToString() = 0;
+      virtual string ToString() const = 0;
       virtual double DiscountedPrice(int numGoods) = 0;
       
    protected:

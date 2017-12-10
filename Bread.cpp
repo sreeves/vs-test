@@ -18,11 +18,11 @@ Bread::Bread(string breadType) {
 	cout << fixed << setprecision(PRECISION);
    price = BREADPRICE;
    //this->breadType = breadType;
-   os << breadType << " bread " << BakedGood::ToString();
+   os << breadType << " bread " << BakedGood::ToString(); //CALL TO BASE CLASS
    description = os.str();
 }
 
-string Bread::ToString() {
+string Bread::ToString() const {
    return description;
 }
 

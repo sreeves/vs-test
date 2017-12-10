@@ -25,11 +25,11 @@ LayerCake::LayerCake(string flavor, string frosting, int numLayers) : Cake(flavo
    }
 
    ostream << numLayers << "-layer " << flavor << " cake with " << frosting;
-   ostream << "frosting " << BakedGood::ToString();
+   ostream << "frosting " << BakedGood::ToString(); //CALL TO BASE CLASS
    description = ostream.str();
 }
 
-string LayerCake::ToString() {
+string LayerCake::ToString() const {
    return description;
 }
 

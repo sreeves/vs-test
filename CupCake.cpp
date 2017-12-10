@@ -20,11 +20,11 @@ CupCake::CupCake(string flavor, string frosting, string colorSprinkles) : Cake(f
       price = CUPCAKEPRICE + .20;
    }
    ostream << flavor << " cupcake with " << frosting << " frosting and " << colorSprinkles;
-   ostream << " sprinkles " << BakedGood::ToString();
+   ostream << " sprinkles " << BakedGood::ToString(); //CALL TO BASE CLASS
    description = ostream.str();
 }
 
-string CupCake::ToString() {
+string CupCake::ToString() const {
    return description;
 }
 

@@ -1,6 +1,6 @@
 /*
 Alexis Reeves, Section 10, lexinreeves@gmail.com
-Description: Declarations of class LayerCake. Contains protected variables flavor, frosting, numLayers, LAYERCAKEPRICE.   
+Description: Declarations of class LayerCake. Contains protected variables numLayers, LAYERCAKEPRICE.   
 Done without pair programming and in Visual Studio.
 Late Days: none
 */
@@ -14,7 +14,7 @@ using namespace std;
 class LayerCake : public Cake {
 public:
    LayerCake(string flavor, string frosting, int numLayers);
-   string ToString();
+   string ToString() const;
    double DiscountedPrice(int numGoods);
 
 protected:

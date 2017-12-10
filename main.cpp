@@ -20,6 +20,7 @@ Test Case 3: Buy 4 wheat breads, get 1 for free
    Expected Output: Quantity = 4, Total = 13.50
    Result: Passed
 	*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -46,7 +47,6 @@ int main () {
 
 	cout << fixed << setprecision(PRECISION);
 	
-	
 	cout << "**Bread and Cakes Bakery**" << endl << endl;
 	cout << "Enter sub-order (enter \"done\" to finish)" << endl;
 	
@@ -64,7 +64,6 @@ int main () {
 					Bread* myBread = new Bread(breadType);
 					myVector.push_back(myBread);
 				}
-
 			}
 			else if(item == "Layer-cake") {
 				cin >> flavor;
@@ -75,7 +74,6 @@ int main () {
 					LayerCake* myLayerCake = new LayerCake(flavor, frosting, numLayers);
 					myVector.push_back(myLayerCake);
 				}
-
 			}
 			else if(item == "Cupcake") {
 				cin >> flavor;
@@ -123,7 +121,7 @@ int main () {
 	for(int i = 0; i < myVector.size(); ++i) {
 		delete myVector.at(i);		
 	}
-
+	//free memory
 	cout << "Good Bye" << endl;
 	
 	return 0;

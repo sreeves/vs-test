@@ -16,7 +16,7 @@ using namespace std;
 class Bread : public BakedGood {
 public:
    Bread(string breadType = "not specified");
-   string ToString();
+   string ToString() const;
    double DiscountedPrice(int numGoods);
 
 protected:

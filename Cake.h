@@ -1,6 +1,6 @@
 /*
 Alexis Reeves, Section 10, lexinreeves@gmail.com
-Description: 
+Description: Declaration of abstract class Cake. Protected variables flavor and frosting. 
 Done without pair programming and in Visual Studio.
 Late Days: none
 */
@@ -14,7 +14,7 @@ using namespace std;
 class Cake : public BakedGood {
 public:
    Cake(string flavor, string frosting);
-   
+
 protected:
    string flavor;
    string frosting;

@@ -1,6 +1,6 @@
 /*
 Alexis Reeves, Section 10, lexinreeves@gmail.com
-Description: Declarations for class CupCake. Contains protected variables flavor, frosting, colorSprinkles, CUPCAKEPRICE.
+Description: Declarations for class CupCake. Contains protected variables colorSprinkles, CUPCAKEPRICE.
 Done without pair programming and in Visual Studio.
 Late Days: none
 */
@@ -14,7 +14,7 @@ using namespace std;
 class CupCake : public Cake {
 public:
    CupCake(string flavor, string frosting, string colorSprinkles);
-   string ToString();
+   string ToString() const;
    double DiscountedPrice(int numGoods);
 
 protected:

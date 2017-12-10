@@ -12,7 +12,7 @@ Late Days: none
 using namespace std;
 #include "BakedGood.h"
 
-string BakedGood::ToString() {
+string BakedGood::ToString() const {
    const int PRECISION = 2;
    ostringstream os;
 	os << fixed << setprecision(PRECISION);
