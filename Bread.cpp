@@ -1,6 +1,6 @@
 /*
 Alexis Reeves, Section 10, lexinreeves@gmail.com
-Description: Definitions of class Bread. Constructor for Bread instances and Functions "ToString" and "DiscountedPrice".
+Description: Definitions of class Bread. Constructor for Bread  instances and Functions "ToString" and "DiscountedPrice".
 Done without pair programming and in Visual Studio.
 Late Days: none
 */

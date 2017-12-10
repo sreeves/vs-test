@@ -11,9 +11,11 @@ Late Days: none
 using namespace std;
 #include "CupCake.h"
 
-CupCake::CupCake(string flavor, string frosting, string colorSprinkles) {
+CupCake::CupCake(string flavor, string frosting, string colorSprinkles) : Cake(flavor, frosting) {
    ostringstream ostream;
    price = CUPCAKEPRICE;
+   this->colorSprinkles = colorSprinkles;
+
    if(frosting == "cream-cheese") {
       price = CUPCAKEPRICE + .20;
    }

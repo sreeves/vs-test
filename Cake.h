@@ -12,10 +12,12 @@ using namespace std;
 #include "BakedGood.h"
 
 class Cake : public BakedGood {
-   public:
-
-   protected:
-
+public:
+   Cake(string flavor, string frosting);
+   
+protected:
+   string flavor;
+   string frosting;
 };
 
 #endif

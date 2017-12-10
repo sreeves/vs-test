@@ -11,8 +11,11 @@ Late Days: none
 using namespace std;
 #include "LayerCake.h"
    
-LayerCake::LayerCake(string flavor, string frosting, int numLayers) {
+LayerCake::LayerCake(string flavor, string frosting, int numLayers) : Cake(flavor, frosting) {
    ostringstream ostream;
+   
+   this->numLayers = numLayers;
+
    price = LAYERCAKEPRICE;
    if(frosting == "cream-cheese") {
       price = LAYERCAKEPRICE + (1.00 * numLayers);

@@ -18,8 +18,6 @@ public:
    double DiscountedPrice(int numGoods);
 
 protected:
-   string flavor;
-   string frosting;
    int numLayers;
    const double LAYERCAKEPRICE= 9.00;
 };

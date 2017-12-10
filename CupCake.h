@@ -18,8 +18,6 @@ public:
    double DiscountedPrice(int numGoods);
 
 protected:
-   string flavor;
-   string frosting;
    string colorSprinkles;
    const double CUPCAKEPRICE = 1.95;
 };
