@@ -1,3 +1,10 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: Declaration of class Bread. Contains protected variables breadType and BREADPRICE.
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #ifndef Bread_header
 #define Bread_header
 #include <iostream>

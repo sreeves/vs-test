@@ -1,3 +1,10 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: 
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #ifndef Cake_header
 #define Cake_header
 #include <iostream>

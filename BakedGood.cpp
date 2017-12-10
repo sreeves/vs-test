@@ -1,3 +1,10 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: Defines the pure virutal function "ToString".   
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #include <iostream>
 #include <sstream>
 #include <string>

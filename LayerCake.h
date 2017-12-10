@@ -1,3 +1,10 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: Declarations of class LayerCake. Contains protected variables flavor, frosting, numLayers, LAYERCAKEPRICE.   
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #ifndef LayerCake_header
 #define LayerCake_header
 #include <iostream>

@@ -1,3 +1,10 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: Declarations for class CupCake. Contains protected variables flavor, frosting, colorSprinkles, CUPCAKEPRICE.
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #ifndef CupCake_header
 #define CupCake_header
 #include <iostream>

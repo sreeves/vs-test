@@ -1,3 +1,9 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: An abstract class with declarations of two pure virtual functions - "ToString" and "DiscountedPrice".
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
 #ifndef BakedGood_header
 #define BakedGood_header
 #include <iostream>

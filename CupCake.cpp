@@ -1,3 +1,10 @@
+/*
+Alexis Reeves, Section 10, lexinreeves@gmail.com
+Description: Definitions of class CupCake. Constructor for CupCake instances and Functions "ToString" and "DiscountedPrice".
+Done without pair programming and in Visual Studio.
+Late Days: none
+*/
+
 #include <iostream>
 #include <string>
 #include <sstream>
