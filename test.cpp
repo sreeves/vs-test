@@ -575,6 +575,23 @@ CoolClass<myType>::CoolClass(myType typeVal) {
 
 int main(int argv, char **argc) 
 {
+	long NumOfSixes = 0;
+	long NumOfLoops = 10000000000;
+	for(long x=0; x < NumOfLoops; x++) {
+		int dice1 = 1 + random() % 6;
+		int dice2 = 1 + random() % 6;
+		// cout << dice1 << " , " << dice2 << "    ";
+		if(dice1 + dice2 == 6)
+			NumOfSixes ++; 
+		// if(! (x%10) )
+			// cout << endl;
+		if(! (x % 1000000000))
+			cout << "\n" << x;
+	}
+	cout << endl;
+	cout << "We got " << NumOfSixes << " sixes for a percentage of " << 100.0 * (double) NumOfSixes / (double) NumOfLoops << endl;
+	return 0;
+
 	CoolClass<int> c1(3);
 	CoolClass<double> c2(3.0);
 	// dostuff1();
