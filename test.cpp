@@ -21,24 +21,24 @@ enum F_WinPosEnum { F_NORMAL, F_MAX, F_MIN, F_LEFT, F_RIGHT };
 
 class BaseClass {
 public:
-	BaseClass(int x=7);
+	BaseClass(int x = 7);
 	virtual string print() const = 0;
-	void print2();
+	string print2();
 private:
 	int base_x;
 };
 
-BaseClass::BaseClass(int x) {
-	base_x = x;
+BaseClass::BaseClass(int x) : base_x(x) {
 }
 
 string BaseClass::print() const {
-	// throw runtime_error("abstract class - can't instantiate and no reason to call directly");
+	stringstream s;
+	s << "BaseClass::print() - BaseClass::base_x " << base_x;
+	return s.str();
 }
 
-void BaseClass::print2() {
-	this->print();
-	print();
+string BaseClass::print2() {
+	return print();
 }
 
 class ClassB : public BaseClass {
@@ -127,7 +127,8 @@ ClassB ClassB::operator+ (const ClassB& rhs) {
 }
 
 string ClassB::print() const {
-	ostringstream os("ClassB::print() - ", ios_base::ate);
+	string s = BaseClass::print();
+	ostringstream os(s + " ClassB::print() - ", ios_base::ate);
 	os << *this;
 	return os.str();
 }
@@ -146,8 +147,9 @@ SubB::SubB(int x) : x(x), ClassB(4, string("SubB dude"), 4) {
 }
 
 string SubB::print() const {
-		ostringstream os("SubB::print() - ", ios_base::ate);
-		os << ClassB::print() << " SubB::x " << x;
+		string s = ClassB::print();
+		ostringstream os(s + " SubB::print() - ", ios_base::ate);
+		os << " SubB::x " << x;
 		return os.str();
 }
 
@@ -162,8 +164,9 @@ private:
 SubSubB::SubSubB(int x) { sbbx = x; }
 
 string SubSubB::print() const {
-	ostringstream os;
-	os << "SubSubB::print() - " << SubB::print() << " SubSubB::sbbx " << sbbx;
+	string s = SubB::print();
+	ostringstream os(s + "SubSubB::print() - ", ios_base::ate);
+	os << " SubSubB::sbbx " << sbbx;
 	return os.str();
 }
 
@@ -276,8 +279,26 @@ void MyTemplateClass<type5, type6>::print() {
 	cout << x << "  " << y << endl;
 }
 
+struct HTag {
+	string first;
+	string last;
+	int number;
+	HTag * next;
+};
+
+HTag FillTag(HTag t, string f, string l, int n) {
+	t.first = f;
+	t.last = l;
+	t.number = n;
+	t.next->first = "Empty";
+}
+
 void dostuff3() {
 	try {
+		BaseClass *bc = new ClassB(4, "foo", 8);
+		cout << bc->print2() << endl;
+		delete bc;
+
 		SubSubB *mySB = nullptr;
 		SubSubB *mySB2 = new SubSubB(94);
 		cout << typeid(*mySB2).name() << endl;
