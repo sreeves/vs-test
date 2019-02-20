@@ -290,7 +290,8 @@ HTag FillTag(HTag t, string f, string l, int n) {
 	t.first = f;
 	t.last = l;
 	t.number = n;
-	t.next->first = "Empty";
+	t.next->next = nullptr;
+	return t;
 }
 
 void dostuff3() {
@@ -391,6 +392,11 @@ void dostuff3() {
 
 int dostuff1()
 {
+	char key[4096], value[4096];
+	const char *testString = "KeyName12 = This is a value";
+	sscanf(testString, "%[^=]= %[^\n]", key, value);
+	cout << "key: " << key << endl << "Value: " << value << endl;
+
 	char testchar = '\0';
 	cout << "testchar:" << testchar << endl;
 	const char *str = "long"
@@ -596,6 +602,7 @@ CoolClass<myType>::CoolClass(myType typeVal) {
 
 int main(int argv, char **argc) 
 {
+	/*
 	long NumOfSixes = 0;
 	long NumOfLoops = 10000000000;
 	for(long x=0; x < NumOfLoops; x++) {
@@ -615,9 +622,10 @@ int main(int argv, char **argc)
 
 	CoolClass<int> c1(3);
 	CoolClass<double> c2(3.0);
-	// dostuff1();
+	*/
+	dostuff1();
 	//dostuff2();
-	dostuff3();
+	// dostuff3();
 	// pause();
 	cout << "done" << endl;
 }
